@@ -68,8 +68,8 @@ def index():
        print(tweet)
        print(query_params)
     json_response = connect_to_endpoint(search_url, query_params)
-    return render_template('index.html',json=json_response)
-
+    json_formatted_str = json.dumps(json_response, indent=4)
+    return render_template('index.html',json=json_formatted_str)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=6969,debug=True)
