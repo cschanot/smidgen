@@ -60,13 +60,10 @@ app = Flask(__name__)
 @app.route('/', methods = ["GET","POST"])
 def index():
     query_params={'query': 'test place_country:US -birthday -is:retweet'}
-    print(query_params)
     if request.method == "POST":
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
        query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
-       print(tweet)
-       print(query_params)
     json_response = connect_to_endpoint(search_url, query_params)
     json_formatted_str = json.dumps(json_response, indent=4)
     return render_template('index.html',json=json_formatted_str)
