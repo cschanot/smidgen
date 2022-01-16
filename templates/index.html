@@ -4,5 +4,9 @@
 </header>
 <body>
 {{json}}
+<form action="{{ url_for("index")}}" method="post">
+<label for="tweet">Tweet:</label>
+<input type="text" id="tweet" name="tweet" placeholder="tweet">
+<button type="submit">Submit</button>
 </body>
 </html>
