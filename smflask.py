@@ -65,8 +65,7 @@ def index():
        tweet = request.form.get("tweet")
        query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
     json_response = connect_to_endpoint(search_url, query_params)
-    json_formatted_str = json.dumps(json_response, indent=4)
-    return render_template('index.html',json=json_formatted_str)
+    return render_template('index.html',json=json_response)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=6969,debug=True)
