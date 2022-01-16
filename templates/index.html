@@ -2,7 +2,7 @@
 <header>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
 // Builds the HTML Table out of myList json data from Ivy restful service.
-function buildHtmlTable(myList) {
+function buildHtmlTable() {
      var columns = addAllColumnHeaders(myList);
  
      for (var i = 0 ; i < myList.length ; i++) {
@@ -21,7 +21,7 @@ function buildHtmlTable(myList) {
  // Adds a header row to the table and returns the set of columns.
  // Need to do union of keys from all records as some records may not contain
  // all records
- function addAllColumnHeaders(myList)
+ function addAllColumnHeaders({{json}})
  {
      var columnSet = [];
      var headerTr$ = $('<tr/>');
@@ -35,7 +35,7 @@ function buildHtmlTable(myList) {
              }
          }
      }
-     $("#excelDataTable").append(headerTr$);
+     $("#tweetTable").append(headerTr$);
  
      return columnSet;
  }
@@ -44,7 +44,7 @@ function buildHtmlTable(myList) {
 <title>Smidgen</title>
 
 </header>
-<body onload="buildHtmlTable({{json}})">
+<body onload="buildHtmlTable()">
 <table id="tweetTable">
 </table>
 <p>{{json}}</p>
