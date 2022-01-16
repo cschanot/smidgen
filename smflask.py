@@ -17,7 +17,6 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 # Full archine search: https://developer.twitter.com/en/docs/twitter-api/tweets/search/quick-start/full-archive-search
 #query_params = {'query': '(from:twitterdev -is:retweet) OR #twitterdev','tweet.fields': 'author_id'}
 #query_params = {'query': '(happy OR happiness) place_country:US -birthday -is:retweet'}
-query_params = {'query': 'test place_country:US -birthday -is:retweet'}
 
 
 
@@ -58,8 +57,16 @@ def connect_to_endpoint(url, params):
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/', methods = ["GET","POST"])
 def index():
+    query_params={'query': 'test place_country:US -birthday -is:retweet'}
+    print(query_params)
+    if request.method == "POST":
+       # getting input with name = fname in HTML form
+       tweet = request.form.get("tweet")
+       query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
+       print(tweet)
+       print(query_params)
     json_response = connect_to_endpoint(search_url, query_params)
     return render_template('index.html',json=json_response)
 
