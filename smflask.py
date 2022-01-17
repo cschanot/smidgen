@@ -16,8 +16,12 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 
 # See here for example queries: https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query
 # Full archine search: https://developer.twitter.com/en/docs/twitter-api/tweets/search/quick-start/full-archive-search
-#query_params = {'query': '(from:twitterdev -is:retweet) OR #twitterdev','tweet.fields': 'author_id'}
-#query_params = {'query': '(happy OR happiness) place_country:US -birthday -is:retweet'}
+
+# Example query parameters, note: expansions with author_id is REQUIRED to use user.fields.
+#query_params = {'query': 'test place_country:US -birthday -is:retweet',
+#        'tweet.fields': 'public_metrics,created_at,lang,author_id,source',
+#        'expansions': 'author_id',
+#        'user.fields': 'name,username,verified,location'}
 
 
 
