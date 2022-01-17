@@ -18,7 +18,10 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 # --- tweet.fields valid parameters ---
 # attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id, lang,non_public_metrics,
 # organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,reply_settings,source,text,withheld
-query_params = {'query': 'test place_country:US -birthday -is:retweet','tweet.fields': 'public_metrics,created_at,lang,author_id,source'}
+query_params = {'query': 'test place_country:US -birthday -is:retweet',
+                'tweet.fields': 'public_metrics,created_at,lang,author_id,source',
+                'expansions': 'author_id',
+                'user.fields': 'name,username,verified,location'}
 
 
 
