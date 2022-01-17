@@ -65,7 +65,7 @@ def index():
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
        #query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
-       query_params = {'query': '%s place_country:US -birthday -is:retweet','tweet.fields': 'public_metrics,created_at,lang,author_id,source' % tweet}
+       query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,'tweet.fields': 'public_metrics,created_at,lang,author_id,source'}
 
     json_response = connect_to_endpoint(search_url, query_params)
     html_table = json2html.convert(json_response,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
