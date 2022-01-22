@@ -14,7 +14,10 @@
 </head>
 <body>
     <div>
-        {{json | safe}}
+      {{json | safe}}
+    </div>
+    <div>
+      {{stringify}}
     </div>
 </body>
 <form action="{{ url_for("index")}}" method="post">

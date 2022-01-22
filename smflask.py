@@ -76,7 +76,8 @@ def index():
 
     json_response = connect_to_endpoint(search_url, query_params)
     html_table = json2html.convert(json_response,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
-    return render_template('index.html',json=html_table)
+    html_json = json2html.convert(json_response)
+    return render_template('index.html',json=html_table,stringify=html_json)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=6969,debug=True)
