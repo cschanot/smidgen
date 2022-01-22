@@ -3,7 +3,9 @@ TODO:
 1. Find a way to display tweets in a prettier format.
     - Parse data and display tweets based on API information?
     - Dynamically build the HTML for the tweets from javascript? Is there any benefit to doing this and not using the easier method linked below?
+    - https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites
     - https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-javascript-factory-function
+    - https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/overview
 
     Manual embed formatting is as follows:
 

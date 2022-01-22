@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  
   <title>Smidgen</title>
   <style>
     table,
@@ -29,6 +30,7 @@
   <pre id=origJson>
       {{origJson}}
   </pre>
+  <div id="embed"></div>
 </body>
 <form action="{{ url_for("index")}}" method="post">
   <label for="tweet">Tweet:</label>
@@ -37,6 +39,8 @@
   <div>
     Last pull time: ?
   </div>
+  <script src="js/app.js"></script>
+  <script id="twitter-wjs" type="text/javascript" async defer src="//platform.twitter.com/widgets.js"></script>
   </body>
 
 </html>
