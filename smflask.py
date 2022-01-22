@@ -66,6 +66,8 @@ app = Flask(__name__)
 def index():
     query_params={'query': 'test place_country:US -birthday -is:retweet'}
     last_pull = datetime.datetime.now()
+    sep = "."
+    last_pull = last_pull.split(sep, 1)[0]
     if request.method == "POST":
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
