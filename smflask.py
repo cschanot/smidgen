@@ -65,7 +65,7 @@ app = Flask(__name__)
 @app.route('/', methods = ["GET","POST"])
 def index():
     query_params={'query': 'test place_country:US -birthday -is:retweet'}
-    #last_pull = datetime.datetime.fromtimestamp(os.stat('.git/FETCH_HEAD').st_mtime)
+    last_pull = datetime.datetime.now()
     if request.method == "POST":
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
@@ -81,7 +81,7 @@ def index():
     json_deserialize = json.dumps(json_response, indent=1)
     #return render_template('index.html',json=html_table,stringify=html_json,origJson=orig_json)
     
-    return render_template('index.html',json=html_table,origJson=json_deserialize)
+    return render_template('index.html',json=html_table,origJson=json_deserialize,git=last_pull)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=6969,debug=True)
