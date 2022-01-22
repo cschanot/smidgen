@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  
+
   <title>Smidgen</title>
   <style>
     table,
@@ -38,10 +38,11 @@
   <input type="text" id="tweet" name="tweet" placeholder="tweet">
   <button type="submit">Submit</button>
 </form>
-  <div>
-    Last pull time: ?
-  </div>
-  <script>window.twttr = (function(d, s, id) {
+<div>
+  Last pull time: ?
+</div>
+<script>
+  window.twttr = (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0],
       t = window.twttr || {};
     if (d.getElementById(id)) return t;
@@ -49,16 +50,17 @@
     js.id = id;
     js.src = "https://platform.twitter.com/widgets.js";
     fjs.parentNode.insertBefore(js, fjs);
-  
+
     t._e = [];
-    t.ready = function(f) {
+    t.ready = function (f) {
       t._e.push(f);
     };
-  
+
     return t;
-  }(document, "script", "twitter-wjs"));</script>
-  <script id="twitter-wjs" type="text/javascript" async defer src="//platform.twitter.com/widgets.js"></script>
-  <script src="js/app.js"></script>
-  </body>
+  }(document, "script", "twitter-wjs"));
+</script>
+<script id="twitter-wjs" type="text/javascript" async defer src="//platform.twitter.com/widgets.js"></script>
+<script src="js/app.js"></script>
+</body>
 
 </html>
