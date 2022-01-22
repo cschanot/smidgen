@@ -64,7 +64,7 @@ app = Flask(__name__)
 
 @app.route('/', methods = ["GET","POST"])
 def index():
-    query_params={'query': 'test place_country:US -birthday -is:retweet'}
+    #query_params={'query': 'test place_country:US -birthday -is:retweet'}
     if request.method == "POST":
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
