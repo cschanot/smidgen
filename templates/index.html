@@ -16,8 +16,17 @@
     <div id=jsonTable>
       {{json | safe}}
     </div>
+    <div>
+      ---------------------------------------------------
+    </div>
     <div id=jsonString>
       {{stringify}}
+    </div>
+    <div>
+      ---------------------------------------------------
+    </div>
+    <div id=origJson>
+      {{origJson}}
     </div>
 </body>
 <form action="{{ url_for("index")}}" method="post">
