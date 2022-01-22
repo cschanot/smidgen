@@ -70,7 +70,7 @@ def index():
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
        #query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
-       query_params = {'query': 'test place_country:US -birthday -is:retweet',
+       query_params = {'query': '%s place_country:US -birthday -is:retweet' %tweet,
                 'tweet.fields': 'public_metrics,created_at,lang,source',
                 'expansions': 'author_id',
                 'user.fields': 'name,username,location'}
