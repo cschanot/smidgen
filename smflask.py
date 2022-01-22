@@ -6,6 +6,7 @@ import json
 import os
 import datetime
 import time
+from git import Repo
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -69,6 +70,8 @@ app = Flask(__name__)
 def index():
     query_params={'query': 'test place_country:US -birthday -is:retweet'}
     #last_pull = datetime.datetime.fromtimestamp(os.stat('.git/FETCH_HEAD').st_mtime)
+    repo = Repo("https://github.com/cschanot/smidgen.git")
+    assert not repo.bare
     headcommit = repo.head.commit
     asctime = time.asctime(time.gmtime(headcommit.committed_date))
     strftime = time.strftime("%a, %d %b %Y %H:%M", time.gmtime(headcommit.committed_date))
