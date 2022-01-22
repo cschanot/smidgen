@@ -1,37 +1,42 @@
 <html>
+
 <head>
-<title>Smidgen</title>
-<style>
-    table, td, th {
+  <title>Smidgen</title>
+  <style>
+    table,
+    td,
+    th {
       border: 1px solid black;
     }
-    
+
     table {
       width: 100%;
       border-collapse: collapse;
     }
-</style>
+  </style>
 </head>
+
 <body>
-    <div id=jsonTable>
-      {{json | safe}}
-    </div>
-    <div>
-      -------------------------JSON.stringify--------------------------
-    </div>
-    <div id=jsonString>
-      {{stringify | safe}}
-    </div>
-    <pre id=origJson>
+  <div id=jsonTable>
+    {{json | safe}}
+  </div>
+  <div>
+    -------------------------JSON.stringify--------------------------
+  </div>
+  <div id=jsonString>
+    {{stringify | safe}}
+  </div>
+  <pre id=origJson>
       {{origJson}}
-    </pre>
+  </pre>
 </body>
 <form action="{{ url_for("index")}}" method="post">
-<label for="tweet">Tweet:</label>
-<input type="text" id="tweet" name="tweet" placeholder="tweet">
-<button type="submit">Submit</button>
-<div>
-  Last pull time: ?
-</div>
-</body>
+  <label for="tweet">Tweet:</label>
+  <input type="text" id="tweet" name="tweet" placeholder="tweet">
+  <button type="submit">Submit</button>
+  <div>
+    Last pull time: ?
+  </div>
+  </body>
+
 </html>
