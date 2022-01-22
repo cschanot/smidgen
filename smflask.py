@@ -25,8 +25,6 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 #        'expansions': 'author_id',
 #        'user.fields': 'name,username,verified,location'}
 
-
-
 def bearer_oauth(r):
     """
     Method required by bearer token authentication.
@@ -82,6 +80,7 @@ def index():
     #html_json = json2html.convert(json_response)
     json_deserialize = json.dumps(json_response, indent=1)
     #return render_template('index.html',json=html_table,stringify=html_json,origJson=orig_json)
+    
     return render_template('index.html',json=html_table,origJson=json_deserialize)
 
 if __name__ == "__main__":
