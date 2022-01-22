@@ -3,6 +3,8 @@ from json2html import *
 import configparser
 import requests
 import json
+import os
+import datetime
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -65,6 +67,7 @@ app = Flask(__name__)
 @app.route('/', methods = ["GET","POST"])
 def index():
     query_params={'query': 'test place_country:US -birthday -is:retweet'}
+    last_pull = datetime.datetime.fromtimestamp(os.stat('.git/FETCH_HEAD').st_mtime)
     if request.method == "POST":
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
@@ -77,9 +80,9 @@ def index():
     json_response = connect_to_endpoint(search_url, query_params)
     html_table = json2html.convert(json_response,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
     #html_json = json2html.convert(json_response)
-    orig_json = JSON.stringify(json_response, null, 4)
+    json_deserialize = JSON.stringify(json_response, null, 4)
     #return render_template('index.html',json=html_table,stringify=html_json,origJson=orig_json)
-    return render_template('index.html',json=html_table,origJson=orig_json)
+    return render_template('index.html',json=html_table,origJson=json_deserialize,git=last_pull)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=6969,debug=True)
