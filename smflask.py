@@ -77,7 +77,7 @@ def index():
     json_response = connect_to_endpoint(search_url, query_params)
     html_table = json2html.convert(json_response,table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
     #html_json = json2html.convert(json_response)
-    orig_json = json_response
+    orig_json = JSON.stringify(json_response, null, 4)
     #return render_template('index.html',json=html_table,stringify=html_json,origJson=orig_json)
     return render_template('index.html',json=html_table,origJson=orig_json)
 
