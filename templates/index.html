@@ -14,13 +14,13 @@
 </head>
 <body>
     <div id=jsonTable>
-      {{json}}
+      {{json | safe}}
     </div>
     <div>
       -------------------------JSON.stringify--------------------------
     </div>
     <div id=jsonString>
-      {{stringify}}
+      {{stringify | safe}}
     </div>
     <div>
       -------------------------Originial JSON--------------------------
