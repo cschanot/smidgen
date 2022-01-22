@@ -5,6 +5,7 @@ import requests
 import json
 import os
 import datetime
+import time
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -67,7 +68,10 @@ app = Flask(__name__)
 @app.route('/', methods = ["GET","POST"])
 def index():
     query_params={'query': 'test place_country:US -birthday -is:retweet'}
-    last_pull = datetime.datetime.fromtimestamp(os.stat('.git/FETCH_HEAD').st_mtime)
+    #last_pull = datetime.datetime.fromtimestamp(os.stat('.git/FETCH_HEAD').st_mtime)
+    headcommit = repo.head.commit
+    asctime = time.asctime(time.gmtime(headcommit.committed_date))
+    strftime = time.strftime("%a, %d %b %Y %H:%M", time.gmtime(headcommit.committed_date))
     if request.method == "POST":
        # getting input with name = fname in HTML form
        tweet = request.form.get("tweet")
@@ -82,7 +86,7 @@ def index():
     #html_json = json2html.convert(json_response)
     json_deserialize = json.loads(json_response)
     #return render_template('index.html',json=html_table,stringify=html_json,origJson=orig_json)
-    return render_template('index.html',json=html_table,origJson=json_deserialize,git=last_pull)
+    return render_template('index.html',json=html_table,origJson=json_deserialize,git=asctime,git2=strftime)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0",port=6969,debug=True)
