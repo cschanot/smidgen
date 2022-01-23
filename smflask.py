@@ -88,26 +88,9 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/test', methods=["GET", "POST"])
-def test():
-    query_params = {'query': 'test place_country:US -birthday -is:retweet'}
-    if request.method == "POST":
-        # getting input with name = fname in HTML form
-        tweet = request.form.get("tweet")
-        #query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
-        query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
-                        'tweet.fields': 'public_metrics,created_at,lang,source',
-                        'expansions': 'author_id',
-                        'user.fields': 'name,username,location'}
-
-    json_response = connect_to_endpoint(search_url, query_params)
-    html_table = json2html.convert(
-        json_response, table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
-    #html_json = json2html.convert(json_response)
-    json_deserialize = json.dumps(json_response, indent=1)
-    # return render_template('test.html',json=html_table,stringify=html_json,origJson=orig_json)
-
-    return render_template('test.html', json=html_table, origJson=json_deserialize)
+@app.route('/auth', methods=["GET", "POST"])
+def auth():
+    return render_template('auth.html')
 
 
 if __name__ == "__main__":
