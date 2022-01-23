@@ -98,6 +98,16 @@ if (logoutNav) {
     })
 }
 
+function showSignUpForm () {
+    document.getElementById('signup-form').style.display = 'block';
+    document.getElementById('login-form').style.display = 'none';
+}
+
+function showLoginForm () {
+    document.getElementById('signup-form').style.display = 'none';
+    document.getElementById('login-form').style.display = 'block';
+}
+
 // Banner on main page was built oddly, so I had to make a funtion specifically
 // for it to hide the login button while someone is already logged in.
 // >> Bootstrap blocking class changes with !important?

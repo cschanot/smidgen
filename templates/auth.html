@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <div class="signup-form">
+    <div class="signup-form" id="signup-form" style="display: none;">
         <form action="/templates/index.html" method="post">
             <h2>Register</h2>
             <p class="hint-text">Create your account. It's free and only takes a minute.</p>
@@ -44,10 +44,10 @@
                 <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
             </div>
         </form>
-        <div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+        <div class="text-center">Already have an account? <a href="#" onclick="return showSignInForm">Sign in</a></div>
     </div>
 
-    <div class="login-form">
+    <div class="login-form" id="login-form">
         <form action="/templates/index.html" method="post">
             <h2>Login</h2>
             <p class="hint-text">Login to your account.</p>
@@ -61,7 +61,7 @@
                 <button type="submit" class="btn btn-success btn-lg btn-block">Log In</button>
             </div>
         </form>
-        <div class="text-center">Dont have an account? <a href="#">Register</a></div>
+        <div class="text-center">Dont have an account? <a href="#" onclick="return showLoginForm">Register</a></div>
     </div>
 
     <!-- Firebase Configuration -->
