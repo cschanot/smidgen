@@ -20,14 +20,16 @@ body {
     border-radius: 3px;
 }
 
-.signup-form {
+.signup-form,
+.login-form {
     width: 450px;
     margin: 0 auto;
     padding: 30px 0;
     font-size: 15px;
 }
 
-.signup-form h2 {
+.signup-form h2,
+.login-form h2 {
     color: #636363;
     margin: 0 0 15px;
     position: relative;
@@ -35,7 +37,9 @@ body {
 }
 
 .signup-form h2:before,
-.signup-form h2:after {
+.signup-form h2:after,
+.login-form h2:before,
+.login-form h2:after {
     content: "";
     height: 2px;
     width: 30%;
@@ -45,21 +49,25 @@ body {
     z-index: 2;
 }
 
-.signup-form h2:before {
+.signup-form h2:before,
+.login-form h2:before {
     left: 0;
 }
 
-.signup-form h2:after {
+.signup-form h2:after,
+.login-form h2:after {
     right: 0;
 }
 
-.signup-form .hint-text {
+.signup-form .hint-text,
+.login-form .hint-text {
     color: #999;
     margin-bottom: 30px;
     text-align: center;
 }
 
-.signup-form form {
+.signup-form form,
+.login-form form {
     color: #999;
     border-radius: 3px;
     margin-bottom: 15px;
@@ -68,7 +76,8 @@ body {
     padding: 30px;
 }
 
-.signup-form .form-group {
+.signup-form .form-group,
+.login-form .form-group {
     margin-bottom: 20px;
 }
 
@@ -76,46 +85,53 @@ body {
     margin-top: 3px;
 }
 
-.signup-form .btn {
+.signup-form .btn,
+.login-form .btn {
     font-size: 16px;
     font-weight: bold;
     min-width: 140px;
     outline: none !important;
 }
 
-.signup-form .row div:first-child {
+.signup-form .row div:first-child,
+.login-form .row div:first-child {
     padding-right: 10px;
 }
 
-.signup-form .row div:last-child {
+.signup-form .row div:last-child,
+.login-form .row .div:last-child {
     padding-left: 10px;
 }
 
-.signup-form a {
+.signup-form a,
+.login-form a {
     color: #fff;
     text-decoration: underline;
 }
 
-.signup-form a:hover {
+.signup-form a:hover,
+.login-form a:hover {
     text-decoration: none;
 }
 
-.signup-form form a {
+.signup-form form a,
+.login-form form a {
     color: #5cb85c;
     text-decoration: none;
 }
 
-.signup-form form a:hover {
+.signup-form form a:hover,
+.login-form form a:hover {
     text-decoration: underline;
 }
 
 table,
 td,
 th {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
 }
