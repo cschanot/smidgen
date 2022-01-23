@@ -98,16 +98,14 @@ if (logoutNav) {
     })
 }
 
-function showSignUpForm () {
+function showSignUpForm() {
     document.getElementById('signup-form').style.display = 'block';
     document.getElementById('login-form').style.display = 'none';
-    return false;
 }
 
-function showLoginForm () {
+function showLoginForm() {
     document.getElementById('signup-form').style.display = 'none';
     document.getElementById('login-form').style.display = 'block';
-    return false;
 }
 
 // Banner on main page was built oddly, so I had to make a funtion specifically
