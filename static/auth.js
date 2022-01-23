@@ -111,6 +111,7 @@ function showLoginForm() {
 // Banner on main page was built oddly, so I had to make a funtion specifically
 // for it to hide the login button while someone is already logged in.
 // >> Bootstrap blocking class changes with !important?
+/*
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         // Grab documents to hide/show.
@@ -135,4 +136,4 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         dayView.classList.remove("nav-item");
         dayView.style.display = 'none';
     }
-});
+});*/
