@@ -105,7 +105,7 @@ body {
 
 .signup-form a,
 .login-form a {
-    color: #fff;
+    color: rgb(38, 176, 255);
     text-decoration: underline;
 }
 
