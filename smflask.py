@@ -83,8 +83,9 @@ def index():
             json_response, table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
         #html_json = json2html.convert(json_response)
         json_deserialize = json.dumps(json_response, indent=1)
+        return render_template('index.html', json=html_table, origJson=json_deserialize)
 
-    return render_template('index.html', json=html_table, origJson=json_deserialize)
+    return render_template('index.html')
 
 
 @app.route('/test', methods=["GET", "POST"])
