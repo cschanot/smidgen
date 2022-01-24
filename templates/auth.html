@@ -22,46 +22,88 @@
 </head>
 
 <body>
+    <!-- Nav Banner -->
+    <div class="wrapper">
+        <header>
+            <nav>
+                <div class="menu-icon">
+                    <i class="fa fa-bars fa-2x"></i>
+                </div>
+                <div class="logo">
+                    LOGO
+                </div>
+                <div class="menu">
+                    <ul>
+                        <!--
+                        <li><a href="auth.html">Home</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                        -->
+                        <!-- Dynamically Make these in JS later? -->
+                        <li><a href="index.html" id=login-nav>Login</a></li>
+                        <li><a href="auth.html" id=logout-nav>Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-form" id="login-form">
+        <form action="/templates/index.html" method="post">
+            <h2>Login</h2>
+            <p class="hint-text">Login to your account.</p>
+            <div class="form-group">
+                <input type="email" class="form-control" name="email" placeholder="Email" required="required"
+                    id=login-email>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password" required="required"
+                    id=login-pass>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-lg btn-block" id=log-in-button>Log In</button>
+            </div>
+        </form>
+        <!-- Function displays registration form and hides sign in form if user clicks "Register" -->
+        <div class="text-center">Dont have an account? <a href="#"
+                onclick="return showSignUpForm(); return false">Register</a></div>
+    </div>
+
+    <!-- Registration Form -->
     <div class="signup-form" id="signup-form" style="display: none;">
         <form action="/templates/index.html" method="post">
             <h2>Register</h2>
-            <p class="hint-text">Create your account. It's free and only takes a minute.</p>
+            <p class="hint-text">Create a new account.</p>
             <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email" required="required">
+                <input type="email" class="form-control" name="email" placeholder="Email" required="required"
+                    id=signup-email>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+                <input type="password" class="form-control" name="password" placeholder="Password" required="required"
+                    id=signup-pass>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password"
-                    required="required">
+                    required="required" id=signup-confirm-pass>
             </div>
             <div class="form-group">
                 <label class="form-check-label"><input type="checkbox" required="required"> I accept the <a
                         href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+                <button type="submit" class="btn btn-success btn-lg btn-block" id=register-button>Register Now</button>
             </div>
         </form>
-        <div class="text-center">Already have an account? <a href="#" onclick="return showLoginForm();return false">Sign in</a></div>
+        <!-- Function displays sign in form and hides registration form if user clicks "Sign In" -->
+        <div class="text-center">Already have an account? <a href="#" onclick="return showLoginForm();return false">Sign
+                in</a></div>
     </div>
 
-    <div class="login-form" id="login-form">
-        <form action="/templates/index.html" method="post">
-            <h2>Login</h2>
-            <p class="hint-text">Login to your account.</p>
-            <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Email" required="required">
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success btn-lg btn-block">Log In</button>
-            </div>
-        </form>
-        <div class="text-center">Dont have an account? <a href="#" onclick="return showSignUpForm(); return false">Register</a></div>
+    <!-- Password Match Alert -->
+    <div class="alert alert-danger" role="alert" id="pass-match-alert" style="display: none;">
+        Passwords must match.
     </div>
 
     <!-- Firebase Configuration -->

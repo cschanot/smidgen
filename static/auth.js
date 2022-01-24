@@ -7,49 +7,9 @@
 // https://stackoverflow.com/questions/60156164/how-to-stop-firebase-re-auth-on-every-page-reload-in-a-react-app
 
 // For now errors are displayed in console only (CTRL+Shift+i)
-const signupForm = document.querySelector('#signup-form');
 const loginForm = document.querySelector('#login-form');
-const logoutNav = document.getElementById("logoutNav");
-
-
-if (signupForm) {
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const auth = firebase.auth();
-
-        var userEmail = document.getElementById("new-user-email").value;
-        var userPassword = document.getElementById("new-user-password").value;
-        var confirmPass = document.getElementById("confirm-password").value;
-        if (userPassword === confirmPass) {
-            auth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .then((userCredential) => {
-                    // Signed in 
-                    const user = userCredential.user;
-                    document.getElementById('loginNav').style.display = 'none';
-                    document.getElementById('logoutNav').style.display = 'block';
-
-                    // Create a collection that is linked to the unique user ID that is logged in.
-                    return db.collection('users').doc(userCredential.user.uid).set({
-                            email: userEmail
-                        }).then(() => {
-                            // Debugging code, remove from production.
-                            console.log("Document written with ID: ", userCredential.user.uid);
-
-                            signupForm.reset();
-                            window.location = 'month.html';
-                        })
-                        .catch((error) => {
-                            console.error("Error adding document: ", error);
-                        })
-                });
-        } else {
-            // Change this later, alerts are terrible.
-            window.alert("Passwords must match!");
-        }
-    })
-}
-
+const signupForm = document.querySelector('#signup-form');
+const logoutNav = document.getElementById("logout-nav");
 
 // Firebase log-in function
 
@@ -70,7 +30,7 @@ if (loginForm) {
             .then((userCredential) => {
 
                 // Signed in
-                window.location = 'month.html';
+                window.location = 'index.html';
                 const user = userCredential.user;
                 console.log(user);
                 loginForm.reset();
@@ -86,14 +46,55 @@ if (loginForm) {
     })
 };
 
+// New user sign-up
+if (signupForm) {
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const auth = firebase.auth();
+
+        var userEmail = document.getElementById("signup-email").value;
+        var userPassword = document.getElementById("signup-password").value;
+        var confirmPass = document.getElementById("signup-confirm-pass").value;
+        if (userPassword === confirmPass) {
+            auth.createUserWithEmailAndPassword(userEmail, userPassword)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    document.getElementById('login-nav').style.display = 'none';
+                    document.getElementById('logout-nav').style.display = 'block';
+
+                    // Create a collection that is linked to the unique user ID that is logged in.
+                    return db.collection('users').doc(userCredential.user.uid).set({
+                            email: userEmail
+                        }).then(() => {
+                            // Debugging code, remove from production.
+                            console.log("Document written with ID: ", userCredential.user.uid);
+
+                            signupForm.reset();
+                            window.location = 'index.html';
+                        })
+                        .catch((error) => {
+                            console.error("Error adding document: ", error);
+                        })
+                });
+        } else {
+            document.getElementById("pass-match-alert").style.display = "block";
+            // Change this later, alerts are terrible.
+            window.alert("Passwords must match!");
+        }
+    })
+}
+
+
 // Real Time Listener (Logout)
 if (logoutNav) {
     logoutNav.addEventListener("click", (e) => {
         e.preventDefault();
         firebase.auth().signOut();
-        document.getElementById('loginNav').style.display = 'block';
-        document.getElementById('logoutNav').style.display = 'none';
-        window.location = 'index.html';
+        document.getElementById('login-nav').style.display = 'block';
+        document.getElementById('logout-nav').style.display = 'none';
+        window.location = 'auth.html';
         //console.log("LOGOUT BUTTON CLICKED");
     })
 }
