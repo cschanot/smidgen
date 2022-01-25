@@ -2,12 +2,14 @@ main {
     position: absolute;
     top: 30px;
     bottom: 0;
-    overflow-y: scroll;
+    overflow-y: scroll; 
   }
 
 body {
-    padding-top: 80px;
-}
+    overflow: hidden;
+    margin: 0;
+    padding-top: 30px;
+  }
 
 .fixed-top
 {
