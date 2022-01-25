@@ -177,7 +177,7 @@ header {
     line-height: 30px;
     position: fixed;
     float: left;
-    padding-left: 40px;
+    margin: 15px 40px;
     color: #fff;
     font-weight: bold;
     font-size: 20px;
