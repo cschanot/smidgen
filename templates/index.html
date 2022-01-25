@@ -4,8 +4,6 @@
 <head>
   <title>Smidgen</title>
 
-  <!-- JQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Twitter Embed -->
   <script src="https://platform.twitter.com/widgets.js"></script>
   <!--Firebase Scripts-->
@@ -28,7 +26,7 @@
 
 <body>
   <!-- Nav Banner -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -110,6 +108,8 @@
 </script>
 
 <!-- Remote Scripts -->
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Flask local scripts syntaxn-->
 <script src="{{url_for('static', filename='load.js')}}"></script>
