@@ -1,8 +1,14 @@
-/* Temp */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
 body {
     color: rgb(145, 145, 145);
-    background: #686868;
+    background: #8a8a8a;
     font-family: 'Roboto', sans-serif;
+    padding-top: 50px;
 }
 
 .form-control {
@@ -144,12 +150,6 @@ table {
     position: absolute;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
 /*
 body {
     font-family: "Helvetica Neue",sans-serif;
@@ -261,5 +261,7 @@ nav ul li a {
     .menu-icon {
           display: block;
     }
+
+    body { padding-top: 100px; }
 
 }
