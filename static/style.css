@@ -6,9 +6,9 @@ html, body {
 
 body {
     color: rgb(145, 145, 145);
-    background: #8a8a8a;
+    background: #4242428f;
     font-family: 'Roboto', sans-serif;
-    padding-top: 50px;
+    padding-top: 40px;
 }
 
 .form-control {
@@ -262,6 +262,7 @@ nav ul li a {
           display: block;
     }
 
-    body { padding-top: 100px; }
+    body {
+        padding-top: 40px; }
 
 }
