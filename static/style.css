@@ -6,7 +6,7 @@ html, body {
 
 body {
     color: rgb(145, 145, 145);
-    background: #4242428f;
+    background: #4242428f !important;
     font-family: 'Roboto', sans-serif;
     /*padding-top: 40px;*/
 }
