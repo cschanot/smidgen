@@ -230,6 +230,10 @@ nav ul li a {
     display: none;
 }
 
+.menu {
+    position: fixed;
+}
+
 @media(max-width: 786px) {
 
     .logo {
