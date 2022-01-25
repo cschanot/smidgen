@@ -28,7 +28,7 @@ body {
 }
 
 .navbar-brand{
-    color: #068f06;
+    color: #068f06 !important;
 }
 
 .signup-form,
