@@ -185,7 +185,7 @@ header {
 }
 
 nav {
-    position: fixed;
+    position: sticky;
     width: 100%;
     line-height: 60px;
 }
