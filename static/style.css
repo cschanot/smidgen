@@ -22,6 +22,10 @@ body {
     border-radius: 3px;
 }
 
+.btn{
+    padding-right: 30px;
+}
+
 .signup-form,
 .login-form {
     width: 450px;
