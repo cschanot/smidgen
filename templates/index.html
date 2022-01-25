@@ -13,7 +13,7 @@
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-functions.js"></script>
-  <!-- CSS Scripts -->
+  <!-- CSS Imports -->
   <link rel="stylesheet" href="/static/style.css">
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -28,7 +28,29 @@
 
 <body>
   <!-- Nav Banner -->
-
+  <header class="cd-main-header text-center flex flex-column flex-center">
+    <p class="margin-top-md margin-bottom-xl"></p>
+    <div class="nav-menu fixed-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <nav class="navbar navbar-dark navbar-expand-lg">
+              <div class="collapse navbar-collapse" id="navbar">
+                <div>
+                  <span class="custom-logo"> SMIDGen </span>
+                </div>
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item"> <a class="nav-link active" href="index.html">HOME</a> </li>
+                  <li class="nav-item"> <a class="nav-link" id="loginNav" href="auth.html">LOG IN</a> </li>
+                  <li class="nav-item"> <a class="nav-link" id="logoutNav" href="index.html">LOG OUT</a> </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
   -------------------------JSON Table-------------------------
   <div id=jsonTable>
     {{json | safe}}
