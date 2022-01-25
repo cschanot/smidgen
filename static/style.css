@@ -27,6 +27,10 @@ body {
     padding-right: 30px;
 }
 
+.navbar-brand{
+    color: #068f06;
+}
+
 .signup-form,
 .login-form {
     width: 450px;
