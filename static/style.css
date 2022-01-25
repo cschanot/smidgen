@@ -174,10 +174,10 @@ header {
 }
 
 .logo {
-    line-height: 60px;
+    line-height: 30px;
     position: fixed;
     float: left;
-    margin: 16px 46px;
+    padding-left: 40px;
     color: #fff;
     font-weight: bold;
     font-size: 20px;
@@ -191,7 +191,7 @@ nav {
 }
 
 nav ul {
-    line-height: 60px;
+    line-height: 30px;
     list-style: none;
     background: rgba(0, 0, 0, 0);
     overflow: hidden;
