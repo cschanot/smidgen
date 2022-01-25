@@ -22,7 +22,8 @@ body {
     border-radius: 3px;
 }
 
-.btn{
+/* Login/Logout Button Padding */
+.form-inline{
     padding-right: 30px;
 }
 
