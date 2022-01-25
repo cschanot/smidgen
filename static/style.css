@@ -1,3 +1,12 @@
+body {
+    padding-top: 30px;
+}
+
+.fixed-top
+{
+    line-height: 30px;
+}
+
 .form-control {
     height: 40px;
     box-shadow: none;
@@ -141,4 +150,3 @@ table {
 {
     padding-left: 30px;
 }
-
