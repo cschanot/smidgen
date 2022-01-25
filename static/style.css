@@ -8,7 +8,7 @@ body {
     color: rgb(145, 145, 145);
     background: #4242428f;
     font-family: 'Roboto', sans-serif;
-    padding-top: 40px;
+    /*padding-top: 40px;*/
 }
 
 .form-control {
@@ -261,8 +261,9 @@ nav ul li a {
     .menu-icon {
           display: block;
     }
-
+/*
     body {
         padding-top: 40px; }
+        */
 
 }

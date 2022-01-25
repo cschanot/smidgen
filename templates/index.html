@@ -1,8 +1,13 @@
-<html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
   <title>Smidgen</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="/static/style.css">
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-firestore.js"></script>
@@ -21,31 +26,31 @@
 </head>
 
 <body>
-    <!-- Nav Banner -->
-    <div class="wrapper">
-      <header>
-          <nav>
-              <div class="menu-icon">
-                  <i class="fa fa-bars fa-2x"></i>
-              </div>
-              <div class="logo">
-                  LOGO
-              </div>
-              <div class="menu">
-                  <ul>
-                      <!--
+  <!-- Nav Banner -->
+  <div class="wrapper">
+    <header>
+      <nav>
+        <div class="menu-icon">
+          <i class="fa fa-bars fa-2x"></i>
+        </div>
+        <div class="logo">
+          LOGO
+        </div>
+        <div class="menu">
+          <ul>
+            <!--
                       <li><a href="auth.html">Home</a></li>
                       <li><a href="#">About</a></li>
                       <li><a href="#">Blog</a></li>
                       <li><a href="#">Contact</a></li>
                       -->
-                      <!-- Dynamically Make these in JS later? -->
-                      <li><a href="index.html" id=login-nav>Login</a></li>
-                      <li><a href="auth.html" id=logout-nav>Logout</a></li>
-                  </ul>
-              </div>
-          </nav>
-      </header>
+            <!-- Dynamically Make these in JS later? -->
+            <li><a href="index.html" id=login-nav>Login</a></li>
+            <li><a href="auth.html" id=logout-nav>Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
   </div>
   -------------------------JSON Table-------------------------
   <div id=jsonTable>
