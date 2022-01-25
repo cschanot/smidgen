@@ -1,16 +1,9 @@
 body {
-    margin: 0;
-    padding-top: 30px;
+    padding-top: 80px;
 }
 
-.main {
-    position: absolute;
-    top: 30px;
-    bottom: 0;
-    overflow-y: scroll;
-}
-
-.fixed-top {
+.fixed-top
+{
     line-height: 30px;
 }
 
@@ -146,18 +139,18 @@ table {
 }
 
 /* Danger Alert formatting */
-.alert-danger {
+.alert-danger
+{
     /* Keep alert on top 
     z-index: 10;*/
     position: absolute;
 }
 
-.navbar-brand {
+.navbar-brand
+{
     padding-left: 30px;
 }
 
 @media screen and (max-width: 768px) {
-    body {
-        padding-top: 0px;
-    }
+    body { padding-top: 0px; }
 }
