@@ -7,8 +7,9 @@
 // https://stackoverflow.com/questions/60156164/how-to-stop-firebase-re-auth-on-every-page-reload-in-a-react-app
 
 // For now errors are displayed in console only (CTRL+Shift+i)
-const loginForm = document.querySelector('#login-form');
-const signupForm = document.querySelector('#signup-form');
+const loginForm = document.querySelector("#login-form");
+const signupForm = document.querySelector("#signup-form");
+const loginNav = document.getElementById("login-nav");
 const logoutNav = document.getElementById("logout-nav");
 
 // Firebase log-in function
@@ -22,8 +23,8 @@ if (loginForm) {
         e.preventDefault();
 
         // Grab input from user.
-        let userEmail = document.getElementById("user-email").value;
-        let userPassword = document.getElementById("user-password").value;
+        let userEmail = document.getElementById("login-email").value;
+        let userPassword = document.getElementById("login-pw").value;
 
         // Sign in user with firebase.
         firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
@@ -33,7 +34,8 @@ if (loginForm) {
                 window.location = 'index.html';
                 const user = userCredential.user;
                 console.log(user);
-                loginForm.reset();
+                document.forms[0].reset();
+                //loginForm.reset();
             }).catch(function (error) {
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -54,15 +56,15 @@ if (signupForm) {
         const auth = firebase.auth();
 
         var userEmail = document.getElementById("signup-email").value;
-        var userPassword = document.getElementById("signup-password").value;
-        var confirmPass = document.getElementById("signup-confirm-pass").value;
+        var userPassword = document.getElementById("signup-pw").value;
+        var confirmPass = document.getElementById("signup-confirm-pw").value;
         if (userPassword === confirmPass) {
             auth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .then((userCredential) => {
                     // Signed in 
                     const user = userCredential.user;
-                    document.getElementById('login-nav').style.display = 'none';
-                    document.getElementById('logout-nav').style.display = 'block';
+                    //document.getElementById('login-nav').style.display = 'none';
+                    //document.getElementById('logout-nav').style.display = 'block';
 
                     // Create a collection that is linked to the unique user ID that is logged in.
                     return db.collection('users').doc(userCredential.user.uid).set({
@@ -70,8 +72,8 @@ if (signupForm) {
                         }).then(() => {
                             // Debugging code, remove from production.
                             console.log("Document written with ID: ", userCredential.user.uid);
-
-                            signupForm.reset();
+                            document.forms[0].reset();
+                            //signupForm.reset();
                             window.location = 'index.html';
                         })
                         .catch((error) => {
@@ -112,29 +114,20 @@ function showLoginForm() {
 // Banner on main page was built oddly, so I had to make a funtion specifically
 // for it to hide the login button while someone is already logged in.
 // >> Bootstrap blocking class changes with !important?
-/*
+
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         // Grab documents to hide/show.
-        var login = document.getElementById('loginNav');
-
-        // Hide login button when logged in.
-        login.classList.remove("nav-item");
-        login.style.display = 'none';
+        logoutNav.style.display = 'block';
     } else {
         // Grab documents to hide/show.
-        var logout = document.getElementById('logoutNav');
-        var monthView = document.getElementById('monthView');
-        var dayView = document.getElementById('dayView');
+        loginNav.style.display = 'block';
+        loginForm.style.display = 'block';
 
-        // Hide logout button when not logged in.
-        logout.classList.remove("nav-item");
-        logout.style.display = 'none';
-
-        // Hide month/day nav items when not logged in.
-        monthView.classList.remove("nav-item");
-        monthView.style.display = 'none';
-        dayView.classList.remove("nav-item");
-        dayView.style.display = 'none';
+        // Hide other nav items when not logged in.
+        /* TODO:
+        projects.style.display = 'none';
+        example.style.display = 'none';
+        */
     }
-});*/
+});

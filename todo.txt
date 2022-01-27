@@ -1,36 +1,12 @@
 TODO:
 
 1. Find a way to display tweets in a prettier format.
-    - Parse data and display tweets based on API information?
-    - Dynamically build the HTML for the tweets from javascript? Is there any benefit to doing this and not using the easier method linked below?
     - https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites
     - https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-javascript-factory-function
     - https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/overview
 
-    Manual embed formatting is as follows:
-
-    <blockquote class="twitter-tweet">
-    <p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a
-        href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a
-        href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a
-        href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a
-        href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior
-    (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a>
-  </blockquote>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-  This translates (LOOSELY) to:
-
-  <blockquote class="twitter-tweet">
-    <p lang="{{lang}}" dir="ltr">{{text}} <a
-        href="https://twitter.com/{{entities.mentions.tag}}">@{{entities.mentions.tag}}</a>. <a
-        href="https://twitter.com/hashtag/{{entities.hashtags.tag[0]}}">#{{entities.hashtags.tag[0]}}</a> <a
-        href="https://twitter.com/hashtag/{{entities.hashtags.tag[1]}}">#{{entities.hashtags.tag[1]}}</a> <a
-        href="{{profile_image_url_https}}">entities.urls.url</a></p>&mdash; US Department of the Interior
-    (@{{username}}) <a href="https://twitter.com/{{username}}/status/{{id}}">{{created_at}}</a>
-  </blockquote>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
 2. Parse/organize JSON data for analytics/machine learning.
     - It's already in a dictionary as far as Python in concerned so this shouldn't be too bad?!
+
+3. Different implementation for displaying login/logout button. They flash on page refresh as the user is being reauthenticated by firebase.
+    - Use localstorage boolean instead of reauthing every refresh?
