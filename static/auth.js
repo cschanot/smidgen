@@ -31,7 +31,7 @@ if (loginForm) {
             .then((userCredential) => {
 
                 // Signed in
-                window.location = 'index.html';
+                window.location = '/';
                 const user = userCredential.user;
                 console.log(user);
                 document.forms[0].reset();
@@ -74,7 +74,7 @@ if (signupForm) {
                             console.log("Document written with ID: ", userCredential.user.uid);
                             document.forms[0].reset();
                             //signupForm.reset();
-                            window.location = 'index.html';
+                            window.location = '/';
                         })
                         .catch((error) => {
                             console.error("Error adding document: ", error);
@@ -96,7 +96,7 @@ if (logoutNav) {
         firebase.auth().signOut();
         document.getElementById('login-nav').style.display = 'block';
         document.getElementById('logout-nav').style.display = 'none';
-        window.location = 'auth.html';
+        window.location = 'auth';
         //console.log("LOGOUT BUTTON CLICKED");
     })
 }
