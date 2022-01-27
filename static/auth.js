@@ -139,5 +139,9 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
             loginForm.style.display = 'block';
         }
         loginNav.style.display = 'block';
+        if(window.location != 'auth')
+        {
+            window.location = 'auth';
+        }
     }
 });
