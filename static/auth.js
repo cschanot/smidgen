@@ -133,16 +133,16 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         document.getElementById('main').style.display = 'block';
         logoutNav.style.display = 'block';
     } else {
-        // Grab documents to hide/show
-
         // Debugging
         console.log(window.location.pathname);
 
+        // If the user is not logged in, redirect to the login page.
         if(window.location.pathname != "/auth")
         {
             window.location = 'auth';
         }
-        
+
+        // Grab documents to hide/show
         if(loginForm)
         {
             loginForm.style.display = 'block';
