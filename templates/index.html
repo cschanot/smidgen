@@ -69,13 +69,13 @@
     </div>
   </nav>
   <div class=main id="main" style="display: none;">
-    -------------------------JSON Table-------------------------
-    <div id="jsonTable">
+    ------------------------- JSON Table -------------------------
+    <div id="jsonTable" style="text-align:center">
       {{json | safe}}
     </div>
-    <div>
+    <div style="text-align:center">
       <br><br>
-      -------------------------JSON.stringify--------------------------
+      ------------------------- Original JSON Dict. -------------------------
     </div>
     <div id="jsonString">
       {{stringify | safe}}
@@ -83,16 +83,16 @@
     <pre id="origJson">
       {{origJson}}
   </pre>
-    <br>
-    -------------------------Embed----------------------------------
-    <div id="embed"></div>
+  <div style="text-align:center">------------------------- Embed -------------------------</div>
+    <div id="embed" style="text-align:center"></div>
+    </div>
 <!-- <form action="{{ url_for("index")}}" method="post">
     <label for="tweet">Tweet:</label>
     <input type="text" id="tweet" name="tweet" placeholder="tweet">
     <button type="submit">Submit</button>
   </form> -->
 
-<form action="" method="post">
+<form action="" method="post" style="text-align:center">
   <label for="tweet">Tweet:</label>
   <input type="text" id="tweet" name="tweet" placeholder="tweet">
   <button type="submit">Submit</button>
