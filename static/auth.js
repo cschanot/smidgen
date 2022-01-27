@@ -13,6 +13,7 @@ const logoutNav = document.getElementById("logout-nav");
 
 // Firebase Login
 if (loginForm) {
+    loginForm.style.display = 'block';
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -54,6 +55,7 @@ if (loginForm) {
 
 // Firebase Registration
 if (signupForm) {
+    signupForm.style.display = 'block';
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -134,7 +136,11 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         logoutNav.style.display = 'block';
     } else {
         // Grab documents to hide/show.
+        if(loginForm)
+        {
+            loginForm.style.display = 'block';
+        }
         loginNav.style.display = 'block';
-        loginForm.style.display = 'block';
+        window.location = 'auth';
     }
 });
