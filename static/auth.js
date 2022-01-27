@@ -133,18 +133,20 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         document.getElementById('main').style.display = 'block';
         logoutNav.style.display = 'block';
     } else {
-        // Grab documents to hide/show.
+        // Grab documents to hide/show
+
+        // Debugging
+        console.log(window.location.pathname);
+
+        if(window.location.pathname != "/auth")
+        {
+            window.location = 'auth';
+        }
+        
         if(loginForm)
         {
             loginForm.style.display = 'block';
         }
         loginNav.style.display = 'block';
-        console.log(window.location);
-        /*
-        if(window.location != 'auth')
-        {
-            window.location = 'auth';
-        }
-        */
     }
 });
