@@ -139,9 +139,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
             loginForm.style.display = 'block';
         }
         loginNav.style.display = 'block';
+        console.log(window.location);
+        /*
         if(window.location != 'auth')
         {
             window.location = 'auth';
         }
+        */
     }
 });
