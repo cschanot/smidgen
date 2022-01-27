@@ -55,7 +55,6 @@ def main():
         tweet_ids.append(i['id'])
         count += 1
     print("\nResulting Array:",tweet_ids)
-    
 
 if __name__ == "__main__":
     main()
