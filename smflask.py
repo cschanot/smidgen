@@ -35,7 +35,6 @@ def bearer_oauth(r):
     r.headers["User-Agent"] = "v2FullArchiveSearchPython"
     return r
 
-
 def connect_to_endpoint(url, params):
     response = requests.request(
         "GET", search_url, auth=bearer_oauth, params=params)
@@ -43,26 +42,6 @@ def connect_to_endpoint(url, params):
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
     return response.json()
-
-
-def bearer_oauth(r):
-    """
-    Method required by bearer token authentication.
-    """
-
-    r.headers["Authorization"] = f"Bearer {bearer_token}"
-    r.headers["User-Agent"] = "v2FullArchiveSearchPython"
-    return r
-
-
-def connect_to_endpoint(url, params):
-    response = requests.request(
-        "GET", search_url, auth=bearer_oauth, params=params)
-    print(response.status_code)
-    if response.status_code != 200:
-        raise Exception(response.status_code, response.text)
-    return response.json()
-
 
 app = Flask(__name__)
 
@@ -84,7 +63,7 @@ def index():
         #html_json = json2html.convert(json_response)
         json_deserialize = json.dumps(json_response, indent=1)
         return render_template('index.html', json=html_table, origJson=json_deserialize)
-        
+
     return render_template('index.html')
 
 
