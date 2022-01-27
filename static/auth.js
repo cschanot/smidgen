@@ -130,6 +130,7 @@ function showLoginForm() {
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         // Grab documents to hide/show.
+        document.getElementById('main').style.display = 'block';
         logoutNav.style.display = 'block';
     } else {
         // Grab documents to hide/show.
