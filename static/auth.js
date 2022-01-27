@@ -1,23 +1,17 @@
 // Firebase Sign-Up Function
+// For now errors are displayed in console only (CTRL+Shift+i)
 
 // TODO: Display errors to user such as ->
 // 1. Email already taken
 // 2. Passwork too weak (Firebase requires [recommends?] 6 characters)
-// 3. Login/Logout elements flashing for a second as firebase reauthenticates a user on refresh.
-// https://stackoverflow.com/questions/60156164/how-to-stop-firebase-re-auth-on-every-page-reload-in-a-react-app
+// 3. Invalid login
 
-// For now errors are displayed in console only (CTRL+Shift+i)
 const loginForm = document.querySelector("#login-form");
 const signupForm = document.querySelector("#signup-form");
 const loginNav = document.getElementById("login-nav");
 const logoutNav = document.getElementById("logout-nav");
 
-// Firebase log-in function
-
-// TODO: Display errors to user such as ->
-// 1. Only display ("Invalid Login") for security reasons?
-
-// For now errors are displayed in console only (CTRL+Shift+i)
+// Firebase Login
 if (loginForm) {
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -29,16 +23,26 @@ if (loginForm) {
         // Sign in user with firebase.
         firebase.auth().signInWithEmailAndPassword(userEmail, userPassword)
             .then((userCredential) => {
-
                 // Signed in
-                window.location = '/';
+
+                // Display/hide auth buttons.
+                document.getElementById('login-nav').style.display = 'none';
+                document.getElementById('logout-nav').style.display = 'block';
+
+                // Debugging.
                 const user = userCredential.user;
                 console.log(user);
+
+                // Reset form inputs.
                 document.forms[0].reset();
-                //loginForm.reset();
+
+                // Redirect to home.
+                window.location = '/';
             }).catch(function (error) {
                 var errorCode = error.code;
                 var errorMessage = error.message;
+
+                // Display error if login is incorrect.
                 if (errorCode === 'auth/wrong-password') {
                     alert('Wrong email or password.');
                 } else {
@@ -48,16 +52,19 @@ if (loginForm) {
     })
 };
 
-// New user sign-up
+// Firebase Registration
 if (signupForm) {
     signupForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
+        // Used for shorthand below.
         const auth = firebase.auth();
 
+        // Sign-up form variables
         var userEmail = document.getElementById("signup-email").value;
         var userPassword = document.getElementById("signup-pw").value;
         var confirmPass = document.getElementById("signup-confirm-pw").value;
+
         if (userPassword === confirmPass) {
             auth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .then((userCredential) => {
@@ -81,6 +88,7 @@ if (signupForm) {
                         })
                 });
         } else {
+            // Untested
             document.getElementById("pass-match-alert").style.display = "block";
             // Change this later, alerts are terrible.
             window.alert("Passwords must match!");
@@ -93,14 +101,20 @@ if (signupForm) {
 if (logoutNav) {
     logoutNav.addEventListener("click", (e) => {
         e.preventDefault();
+        // Sign user out.
         firebase.auth().signOut();
+
+        // Display/hide appropriate auth buttons on banner.
         document.getElementById('login-nav').style.display = 'block';
         document.getElementById('logout-nav').style.display = 'none';
+
+        // Reidrect to login page.
         window.location = 'auth';
         //console.log("LOGOUT BUTTON CLICKED");
     })
 }
 
+// Swap login/registration display when user clicks "Sign In" or "Register" links at the bottom of auth forms. 
 function showSignUpForm() {
     document.getElementById('signup-form').style.display = 'block';
     document.getElementById('login-form').style.display = 'none';
@@ -111,10 +125,8 @@ function showLoginForm() {
     document.getElementById('login-form').style.display = 'block';
 }
 
-// Banner on main page was built oddly, so I had to make a funtion specifically
-// for it to hide the login button while someone is already logged in.
-// >> Bootstrap blocking class changes with !important?
 
+// Display/Hide nav buttons based on users current auth state.
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         // Grab documents to hide/show.
@@ -123,11 +135,5 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         // Grab documents to hide/show.
         loginNav.style.display = 'block';
         loginForm.style.display = 'block';
-
-        // Hide other nav items when not logged in.
-        /* TODO:
-        projects.style.display = 'none';
-        example.style.display = 'none';
-        */
     }
 });
