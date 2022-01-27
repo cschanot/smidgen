@@ -84,11 +84,11 @@ def ids():
         json_response = connect_to_endpoint(search_url, query_params)
             # Example of printing nested dictionary key-value pairs.
         #count = 1
-        tweet_ids = []
+        tweet_ids = {"ID":[]}
         print("\nPrinting nested dictionary as a key-value pair:")
         for i in json_response['data']:
             #print("id (%s):" %count, i['id'])
-            tweet_ids.append(i['id'])
+            tweet_ids['ID'].append(i['id'])
             #count += 1
         return tweet_ids
 
