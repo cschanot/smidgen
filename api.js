@@ -1,3 +1,6 @@
+// Currently UNUSED but working
+// -> npm install needle -> right click run file
+
 // Search for public Tweets across the whole Twitter archive
 // https://developer.twitter.com/en/docs/twitter-api/tweets/search/quick-start/full-archive-search
 
