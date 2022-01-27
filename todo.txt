@@ -10,3 +10,4 @@ TODO:
 
 3. Different implementation for displaying login/logout button. They flash on page refresh as the user is being reauthenticated by firebase.
     - Use localstorage boolean instead of reauthing every refresh?
+    - Fixed (for now) by hiding ALL buttons initially, then loading only the appropriate one. 

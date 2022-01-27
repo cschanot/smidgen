@@ -3,7 +3,7 @@ import json
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
-bearer_token = "<YOUR_TOKEN_HERE>"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAABmiUgEAAAAA6h2vLrTsUWElFlXE1cutt7stObk%3DDUaoRcksG7VjubGkvCYk01BT16sV0IhmneaXqG0VaO1wOhgAIq"
 
 search_url = "https://api.twitter.com/2/tweets/search/all"
 
@@ -24,7 +24,6 @@ query_params = {'query': 'test place_country:US -birthday -is:retweet',
                 'user.fields': 'name,username,verified,location'}
 
 
-
 def bearer_oauth(r):
     """
     Method required by bearer token authentication.
@@ -36,7 +35,8 @@ def bearer_oauth(r):
 
 
 def connect_to_endpoint(url, params):
-    response = requests.request("GET", search_url, auth=bearer_oauth, params=params)
+    response = requests.request(
+        "GET", search_url, auth=bearer_oauth, params=params)
     print(response.status_code)
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
@@ -45,8 +45,17 @@ def connect_to_endpoint(url, params):
 
 def main():
     json_response = connect_to_endpoint(search_url, query_params)
-    print(json.dumps(json_response, indent=4, sort_keys=True))
 
+    # Example of printing nested dictionary key-value pairs.
+    count = 1
+    tweet_ids = []
+    print("\nPrinting nested dictionary as a key-value pair:")
+    for i in json_response['data']:
+        print("id (%s):" %count, i['id'])
+        tweet_ids.append(i['id'])
+        count += 1
+    print("\nResulting Array:",tweet_ids)
+    
 
 if __name__ == "__main__":
     main()
