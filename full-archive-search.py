@@ -70,8 +70,8 @@ def connect_to_endpoint(url, params):
     return response.json()
 
 # Strip symbols.
-def symbol_strip(str):
-    # Characters to replace (this will replace mid word as well)
+def strip_symbols(str):
+    # Characters to replace
     for char in '-.,"[{()}];=+`~_<>/\|@:#?!':
         str=str.replace(char,'')
     # Unable to strip ' with the above since that is what is enclosing everything else, done separately here.
@@ -106,10 +106,14 @@ def main():
 
     # Convert tweet text from JSON to String format.
     tweet_text_string = json.dumps(tweet_text)
+    # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
+    tweet_text_string = tweet_text_string[8:]
     # Strip tweet text of symbols.
-    tweet_text_string = symbol_strip(tweet_text_string)
+    tweet_text_string = strip_symbols(tweet_text_string)
     # Strip stop words.
     tweet_text_string = nltk_filter(tweet_text_string)
+
+    print("\n\nFormatted tweet text:",*tweet_text_string)
 
     # Save top 15 words.
     word_count = Counter(tweet_text_string).most_common(15)
