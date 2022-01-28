@@ -78,13 +78,6 @@ def symbol_strip(str):
     str=str.replace("'",'')
     return str
 
-# Helper function for formatting Counter output
-def counter_strip(in_list):
-    # Characters to replace (this will replace mid word as well)
-    print(type(in_list))
-    res = list(map(lambda st: str.replace(st, "(", ""), in_list))
-    return res
-
 def main():
     json_response = connect_to_endpoint(search_url, query_params)
 
@@ -92,22 +85,36 @@ def main():
     count = 1
     tweet_ids = {"ID":[]}
     tweet_text = {"Text":[]}
-    print("\nPrinting nested dictionary as a key-value pair:")
+
+    # Saving Tweet ID's + Tweet text.
     for i in json_response['data']:
-        print("id (%s):" %count, i['id'])
-        print("text (%s):" %count, i['text'])
+        #print("id (%s):" %count, i['id'])
+        #print("text (%s):" %count, i['text'])
         tweet_ids['ID'].append(i['id'])
         tweet_text['Text'].append(i['text'])
-        count += 1
     
+    print("\n------- Tweet IDs -------")
+    for i in tweet_ids['ID']:
+        print("Tweet ID (%s):" %count,i)
+        count += 1
+    count = 1
+
+    print("\n------- Tweet Text -------")
+    for i in tweet_text['Text']:
+        print("Tweet text (%s):" %count,i)
+        count += 1
+
+    # Convert tweet text from JSON to String format.
     tweet_text_string = json.dumps(tweet_text)
+    # Strip tweet text of symbols.
     tweet_text_string = symbol_strip(tweet_text_string)
+    # Strip stop words.
     tweet_text_string = nltk_filter(tweet_text_string)
 
-    # Save top 10 words.
+    # Save top 15 words.
     word_count = Counter(tweet_text_string).most_common(15)
     # Print top 15 words.
-    print(*word_count, sep="\n")
+    print("\n------- Word Count -------",*word_count, sep="\n")
 
     #print(tweet_ids)
     #print("\nTweet Text Original: ",tweet_text_string)
