@@ -1,13 +1,16 @@
 TODO:
 
-1. Find a way to display tweets in a prettier format.
+1. Find a way to display tweets in a prettier format. [DONE]
     - https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites
     - https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/guides/embedded-tweet-javascript-factory-function
     - https://developer.twitter.com/en/docs/twitter-for-websites/embedded-tweets/overview
+    ** Done with the above implementation, however this seems UI heavy and may need to be changed later to tweet text only etc. **
 
-2. Parse/organize JSON data for analytics/machine learning.
+2. Parse/organize JSON data for analytics/machine learning. [DONE]
     - It's already in a dictionary as far as Python in concerned so this shouldn't be too bad?!
+    ** Done for now, but the logic for stripping stop words and symbols can be better **
+    ** Can't handle emojis or apostrophes **
 
-3. Different implementation for displaying login/logout button. They flash on page refresh as the user is being reauthenticated by firebase.
+3. Different implementation for displaying login/logout button. They flash on page refresh as the user is being reauthenticated by firebase. [DONE]
     - Use localstorage boolean instead of reauthing every refresh?
-    - Fixed (for now) by hiding ALL buttons initially, then loading only the appropriate one. 
+    ** Fixed (for now) by hiding ALL buttons initially, then loading only the appropriate one. **
