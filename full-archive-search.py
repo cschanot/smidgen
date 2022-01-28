@@ -1,5 +1,15 @@
 import requests
 import json
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from collections import Counter
+
+nltk.download('stopwords')
+nltk.download('word_tokenize')
+nltk.download('punkt')
+
+print(stopwords.words('english'))
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -18,7 +28,7 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 # --- tweet.fields valid parameters ---
 # attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id, lang,non_public_metrics,
 # organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,reply_settings,source,text,withheld
-query_params = {'query': 'test place_country:US -birthday -is:retweet',
+query_params = {'query': 'bacon place_country:US -birthday -is:retweet',
                 'tweet.fields': 'public_metrics,created_at,lang,author_id,source',
                 'expansions': 'author_id',
                 'user.fields': 'name,username,verified,location'}
@@ -33,6 +43,23 @@ def bearer_oauth(r):
     r.headers["User-Agent"] = "v2FullArchiveSearchPython"
     return r
 
+# nltk filter testing
+def nltk_filter(str):
+    # Lowercase to match filter words.
+    str = str.lower()
+    stop_words = set(stopwords.words('english'))
+    word_tokens = word_tokenize(str)
+    
+    filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
+    filtered_sentence = []
+    
+    for w in word_tokens:
+        if w not in stop_words:
+            filtered_sentence.append(w)
+    
+    #print(word_tokens)
+    #print(filtered_sentence)
+    return filtered_sentence
 
 def connect_to_endpoint(url, params):
     response = requests.request(
@@ -42,19 +69,53 @@ def connect_to_endpoint(url, params):
         raise Exception(response.status_code, response.text)
     return response.json()
 
+# Strip symbols.
+def symbol_strip(str):
+    # Characters to replace (this will replace mid word as well)
+    for char in '-.,"[{()}];=+`~_<>/\|@:#?!':
+        str=str.replace(char,'')
+    # Unable to strip ' with the above since that is what is enclosing everything else, done separately here.
+    str=str.replace("'",'')
+    return str
+
+# Helper function for formatting Counter output
+def counter_strip(in_list):
+    # Characters to replace (this will replace mid word as well)
+    print(type(in_list))
+    res = list(map(lambda st: str.replace(st, "(", ""), in_list))
+    return res
 
 def main():
     json_response = connect_to_endpoint(search_url, query_params)
 
     # Example of printing nested dictionary key-value pairs.
     count = 1
-    tweet_ids = []
+    tweet_ids = {"ID":[]}
+    tweet_text = {"Text":[]}
     print("\nPrinting nested dictionary as a key-value pair:")
     for i in json_response['data']:
         print("id (%s):" %count, i['id'])
-        tweet_ids.append(i['id'])
+        print("text (%s):" %count, i['text'])
+        tweet_ids['ID'].append(i['id'])
+        tweet_text['Text'].append(i['text'])
         count += 1
-    print("\nResulting Array:",tweet_ids)
+    
+    tweet_text_string = json.dumps(tweet_text)
+    tweet_text_string = symbol_strip(tweet_text_string)
+    tweet_text_string = nltk_filter(tweet_text_string)
+
+    # Save top 10 words.
+    word_count = Counter(tweet_text_string).most_common(15)
+    # Print top 15 words.
+    print(*word_count, sep="\n")
+
+    #print(tweet_ids)
+    #print("\nTweet Text Original: ",tweet_text_string)
+    #print(word_count(tweet_text_string))
+    
+    #print(tweet_text_string)
+    #print(Counter(tweet_text_string).most_common())
+    #print(tweet_text)
 
 if __name__ == "__main__":
     main()
