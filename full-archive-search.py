@@ -4,6 +4,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
+import string
 
 nltk.download('stopwords')
 nltk.download('word_tokenize')
@@ -28,7 +29,7 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 # --- tweet.fields valid parameters ---
 # attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id, lang,non_public_metrics,
 # organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,reply_settings,source,text,withheld
-query_params = {'query': 'bacon place_country:US -birthday -is:retweet',
+query_params = {'query': 'claymont place_country:US -birthday -is:retweet',
                 'tweet.fields': 'public_metrics,created_at,lang,author_id,source',
                 'expansions': 'author_id',
                 'user.fields': 'name,username,verified,location'}
@@ -71,11 +72,18 @@ def connect_to_endpoint(url, params):
 
 # Strip symbols.
 def strip_symbols(str):
+    # The below manual approach also works, and is a bit more customizable.
+    # for char in '-.,"[{()}];=+`~_<>\|#@!:?':
+    #str=str.replace("'",'')
+
+    # Removing &amp; explicitly, as I dont want to filter the word "amp".
+    str = str.replace("&amp;", "")
+    # Unicode symbol " ’ " was not being removed by built in string.punctuation.
+    str = str.replace("’", "")
+
     # Characters to replace
-    for char in '-.,"[{()}];=+`~_<>/\|@:#?!':
+    for char in string.punctuation:
         str=str.replace(char,'')
-    # Unable to strip ' with the above since that is what is enclosing everything else, done separately here.
-    str=str.replace("'",'')
     return str
 
 def main():
@@ -86,47 +94,58 @@ def main():
     tweet_ids = {"ID":[]}
     tweet_text = {"Text":[]}
 
+    # Testing json_response output when query results in no hits.
+    #print(json_response)
+
+    if(json_response['meta']['result_count'] != 0):
     # Saving Tweet ID's + Tweet text.
-    for i in json_response['data']:
-        #print("id (%s):" %count, i['id'])
-        #print("text (%s):" %count, i['text'])
-        tweet_ids['ID'].append(i['id'])
-        tweet_text['Text'].append(i['text'])
-    
-    print("\n------- Tweet IDs -------")
-    for i in tweet_ids['ID']:
-        print("Tweet ID (%s):" %count,i)
-        count += 1
-    count = 1
+        for i in json_response['data']:
+            #print("id (%s):" %count, i['id'])
+            #print("text (%s):" %count, i['text'])
+            tweet_ids['ID'].append(i['id'])
+            tweet_text['Text'].append(i['text'])
+        print("Tweet Text Original: ", tweet_text)
 
-    print("\n------- Tweet Text -------")
-    for i in tweet_text['Text']:
-        print("Tweet text (%s):" %count,i)
-        count += 1
+        print("\n------- Tweet IDs -------")
+        for i in tweet_ids['ID']:
+            print("Tweet ID (%s):" %count,i)
+            count += 1
+        count = 1
 
-    # Convert tweet text from JSON to String format.
-    tweet_text_string = json.dumps(tweet_text)
-    # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
-    tweet_text_string = tweet_text_string[8:]
-    # Strip tweet text of symbols.
-    tweet_text_string = strip_symbols(tweet_text_string)
-    # Strip stop words.
-    tweet_text_string = nltk_filter(tweet_text_string)
+        print("\n------- Tweet Text -------")
+        for i in tweet_text['Text']:
+            print("Tweet text (%s):" %count,i)
+            count += 1
 
-    print("\n\nFormatted tweet text:",*tweet_text_string)
+        #print(tweet_text['Text'])
 
-    # Save top 15 words.
-    word_count = Counter(tweet_text_string).most_common(15)
-    # Print top 15 words.
-    print("\n------- Word Count -------",*word_count, sep="\n")
+        # Convert tweet text from JSON to String format.
+        # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
+        tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
+        print("Post JSON -> String: ",tweet_text_string)
+        # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
+        tweet_text_string = tweet_text_string[8:]
+        # Strip tweet text of symbols.
+        tweet_text_string = strip_symbols(tweet_text_string)
+        # Strip stop words.
+        tweet_text_string = nltk_filter(tweet_text_string)
 
-    #print(tweet_ids)
-    #print("\nTweet Text Original: ",tweet_text_string)
-    #print(word_count(tweet_text_string))
-    
-    #print(tweet_text_string)
-    #print(Counter(tweet_text_string).most_common())
-    #print(tweet_text)
+        print("\n\nFormatted tweet text:",*tweet_text_string)
+
+        # Save top 15 words.
+        word_count = Counter(tweet_text_string).most_common(15)
+        # Print top 15 words.
+        print("\n------- Word Count for %s -------" %query_params['query'].split()[0],*word_count, sep="\n")
+
+        #print(tweet_ids)
+        #print("\nTweet Text Original: ",tweet_text_string)
+        #print(word_count(tweet_text_string))
+        
+        #print(tweet_text_string)
+        #print(Counter(tweet_text_string).most_common())
+        #print(tweet_text)
+    else:
+        print("No results for %s" %query_params['query'].split()[0])
 
 if __name__ == "__main__":
     main()

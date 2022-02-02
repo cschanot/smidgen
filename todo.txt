@@ -8,9 +8,12 @@ TODO:
 
 2. Parse/organize JSON data for analytics/machine learning. [DONE]
     - It's already in a dictionary as far as Python in concerned so this shouldn't be too bad?!
-    ** Done for now, but the logic for stripping stop words and symbols can be better **
-    ** Can't handle emojis or apostrophes **
+    ** Done for now, but the logic for stripping stop words and symbols can be better ** [Fixed?!]
+    ** Can't handle emojis or apostrophes ** [Fixed]
+    
 
 3. Different implementation for displaying login/logout button. They flash on page refresh as the user is being reauthenticated by firebase. [DONE]
     - Use localstorage boolean instead of reauthing every refresh?
     ** Fixed (for now) by hiding ALL buttons initially, then loading only the appropriate one. **
+
+4. Find a way to keep links intact, and perhaps @mentions and #hashtags as these are destroyed during parsing/stripping.
