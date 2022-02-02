@@ -29,7 +29,7 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 # --- tweet.fields valid parameters ---
 # attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id, lang,non_public_metrics,
 # organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,reply_settings,source,text,withheld
-query_params = {'query': 'claymont place_country:US -birthday -is:retweet',
+query_params = {'query': '😏 place_country:US -birthday -is:retweet',
                 'tweet.fields': 'public_metrics,created_at,lang,author_id,source',
                 'expansions': 'author_id',
                 'user.fields': 'name,username,verified,location'}
@@ -76,6 +76,8 @@ def strip_symbols(str):
     # for char in '-.,"[{()}];=+`~_<>\|#@!:?':
     #str=str.replace("'",'')
 
+    # New line (\n) are being reduced to (n), therefore we remove any \n before removing symbols/punctuation.
+    str = str.replace("\\n", "")
     # Removing &amp; explicitly, as I dont want to filter the word "amp".
     str = str.replace("&amp;", "")
     # Unicode symbol " ’ " was not being removed by built in string.punctuation.
@@ -134,8 +136,9 @@ def main():
 
         # Save top 15 words.
         word_count = Counter(tweet_text_string).most_common(15)
+        #print(type(word_count))
         # Print top 15 words.
-        print("\n------- Word Count for %s -------" %query_params['query'].split()[0],*word_count, sep="\n")
+        print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
 
         #print(tweet_ids)
         #print("\nTweet Text Original: ",tweet_text_string)
