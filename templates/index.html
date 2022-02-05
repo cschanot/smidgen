@@ -68,7 +68,7 @@
       </form>
     </div>
   </nav>
-  <div class=main id="main">
+  <div class=main id="main" style="display: none;">
 <table>
     {% for item in top_words %}
     <tr>
@@ -145,8 +145,8 @@
   <script src="https://platform.twitter.com/widgets.js"></script>
 
   <!-- Flask local scripts syntax -->
-  <script src="{{url_for('static', filename='app.js')}}"></script>
   <script src="{{url_for('static', filename='load.js')}}"></script>
+  <script src="{{url_for('static', filename='app.js')}}"></script>
   <script src="{{url_for('static', filename='embed.js')}}"></script>
   <script src="{{url_for('static', filename='auth.js')}}"></script>
 
