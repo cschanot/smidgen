@@ -69,10 +69,10 @@
     </div>
   </nav>
   <div class=main id="main" style="display: none;">
-<table border=0>
+<table>
     {% for item in top_words %}
-    <tr border=0>
-      <td border=0 onclick="Yeet_Word({{item[0]}})">{{item[0]}}{{item[1]}}</td>
+    <tr>
+      <td onclick="Yeet_Word({{item[0]}})">{{item[0]}}{{item[1]}}</td>
     </tr>
     {% endfor %}
 </table>
