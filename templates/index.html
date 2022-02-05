@@ -69,7 +69,11 @@
     </div>
   </nav>
   <div class=main id="main" style="display: none;">
-    {{top_words | safe}}
+    {% for item in top_words %}
+    <tr>
+      <td>{{item}}</td>
+    </tr>
+    {% endfor %}
     <!--
     ------------------------- JSON Table -------------------------
     <div id="jsonTable">
