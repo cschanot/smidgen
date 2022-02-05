@@ -14,6 +14,7 @@ $(window).on("scroll", function () {
   }
 })
 function Yeet_Word(tweet_word) {
+  console.log(tweet_word)
   alert(tweet_word);
   previous_query = document.getElementById("tweet").innerHTML.value;
   new_query = previous_query + ' ' + tweet_word;
