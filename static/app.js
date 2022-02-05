@@ -13,9 +13,9 @@ $(window).on("scroll", function () {
     $('nav').removeClass('black');
   }
 })
-function Yeet_Word(tweet_word) {
-  console.log(tweet_word)
-  alert(tweet_word);
+function Yeet_Word() {
+  /*console.log()
+  alert(tweet_word);*/
   previous_query = document.getElementById("tweet").innerHTML.value;
   new_query = previous_query += ' ' += tweet_word;
   document.getElementId("tweet").innerHTML.value = new_query;
