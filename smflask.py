@@ -165,7 +165,10 @@ def index():
             #print(tweet_text)
         else:
             print("No results for %s" %query_params['query'].split()[0])
+            return render_template('index.html')
+
         return render_template('index.html', word_count=top_words)
+    return render_template('index.html')
     
 
 
