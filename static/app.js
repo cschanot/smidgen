@@ -13,3 +13,9 @@ $(window).on("scroll", function () {
     $('nav').removeClass('black');
   }
 })
+function Yeet_Word(tweet_word) {
+  alert(tweet_word);
+  previous_query = document.getElementById("tweet").innerHTML;
+  new_query = previous_query + ' ' + tweet_word;
+  document.getElementId("tweet").innerHTML(new_query);
+  }
