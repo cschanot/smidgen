@@ -1,4 +1,5 @@
 // Get method testing
+/*
 fetch('/ids')
     .then(function (response) {
         return response.text();
@@ -15,3 +16,4 @@ twttr.widgets.createTweet(
       theme: 'dark'
     }
   );
+  */

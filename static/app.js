@@ -13,7 +13,7 @@ $(window).on("scroll", function () {
     $('nav').removeClass('black');
   }
 })
-function Yeet_Word() {
+function Yeet_Word(tweet_word) {
   console.log("yeet word called")
   //alert(tweet_word);
   previous_query = document.getElementById("tweet").innerHTML.value;
