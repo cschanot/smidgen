@@ -58,11 +58,20 @@ def index():
                         'expansions': 'author_id',
                         'user.fields': 'name,username,location'}
         json_response = connect_to_endpoint(search_url, query_params)
+
+        # Store tweet IDs from input request in dictionary.
+        tweet_ids = {"ID":[]}
+        print("\nPrinting nested dictionary as a key-value pair:")
+        for i in json_response['data']:
+            #print("id (%s):" %count, i['id'])
+            tweet_ids['ID'].append(i['id'])
+            #count += 1
+
         html_table = json2html.convert(
             json_response, table_attributes="id=\"info-table\" class=\"table table-bordered table-hover\"")
         #html_json = json2html.convert(json_response)
         json_deserialize = json.dumps(json_response, indent=1)
-        return render_template('index.html', json=html_table, origJson=json_deserialize)
+        return render_template('index.html', json=html_table, origJson=json_deserialize, py2js=tweet_ids)
 
     return render_template('index.html')
 
@@ -70,6 +79,28 @@ def index():
 @app.route('/auth', methods=["GET", "POST"])
 def auth():
     return render_template('auth.html')
+
+# Testing GET method for learning, it worked.
+@app.route('/ids', methods=["GET"])
+def ids():
+    if request.method == "GET":
+        # getting input with name = fname in HTML form
+        tweet = request.form.get("tweet")
+        #query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
+        query_params = {'query': 'test place_country:US -birthday -is:retweet',
+                        'tweet.fields': 'public_metrics,created_at,lang,source',
+                        'expansions': 'author_id',
+                        'user.fields': 'name,username,location'}
+        json_response = connect_to_endpoint(search_url, query_params)
+            # Example of printing nested dictionary key-value pairs.
+        #count = 1
+        tweet_ids = {"ID":[]}
+        print("\nPrinting nested dictionary as a key-value pair:")
+        for i in json_response['data']:
+            #print("id (%s):" %count, i['id'])
+            tweet_ids['ID'].append(i['id'])
+            #count += 1
+        return tweet_ids
 
 
 if __name__ == "__main__":
