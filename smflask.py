@@ -167,7 +167,7 @@ def index():
             print("No results for %s" %query_params['query'].split()[0])
             return render_template('index.html')
 
-        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=tweet_text['Text'])
+        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html(tweet_text['Text']))
     return render_template('index.html')
     
 
