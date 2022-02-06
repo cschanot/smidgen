@@ -118,9 +118,9 @@ def index():
         # Testing json_response output when query results in no hits.
         #print(json_response)
         for numTweets in range(len(json_response['data'])):
-                tweet_text =  json_response['data'][numTweets]['text']
-                print(tweet_text)
-                json_nlp = tweet_text
+                tweet_text_nlp =  json_response['data'][numTweets]['text']
+                print(tweet_text_nlp)
+                json_nlp = tweet_text_nlp
                 nlp_dict[numTweets] = {}
                 nlp_dict[numTweets]['text'] = tweet_text
         # Do NLP shit
