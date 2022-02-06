@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-import json2html
+from json2html import *
 import configparser
 import requests
 import json
