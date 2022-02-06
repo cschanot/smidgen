@@ -10,6 +10,9 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
+import spacy
+
+nlptweet = spacy.load("en_core_web_sm")
 
 nltk.download('stopwords')
 nltk.download('word_tokenize')
@@ -111,10 +114,28 @@ def index():
         count = 1
         tweet_ids = {"ID":[]}
         tweet_text = {"Text":[]}
-
+        nlp_dict = { 0: {'text': '', 'noun_phrases': '', 'verbs': '', 'entities': ''}}
         # Testing json_response output when query results in no hits.
         #print(json_response)
-
+        for numTweets in range(len(json_response['data'])):
+                tweet_text =  json_response['data'][numTweets]['text']
+                print(tweet_text)
+                json_nlp = tweet_text
+                nlp_dict[numTweets] = {}
+                nlp_dict[numTweets]['text'] = tweet_text
+        # Do NLP shit
+                if len(json_nlp.split()) > 1:
+                    doc = nlptweet(json_nlp)
+                    noun_phrases = [chunk.text for chunk in doc.noun_chunks]
+                    nlp_dict[numTweets]['noun_phrases'] = noun_phrases
+                    verbs = [token.lemma_ for token in doc if token.pos_ == "VERB"]
+                    nlp_dict[numTweets]['verbs'] = verbs
+                    print("Noun phrases:", noun_phrases)
+                    print("Verbs:", verbs)
+                    nlp_dict[numTweets]['entities'] = doc.ents
+                    for entity in doc.ents:
+                        print(entity.text, entity.label_)
+        
         if(json_response['meta']['result_count'] != 0):
         # Saving Tweet ID's + Tweet text.
             for i in json_response['data']:
@@ -167,7 +188,7 @@ def index():
             print("No results for %s" %query_params['query'].split()[0])
             return render_template('index.html')
       
-        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html.convert(json = tweet_text['Text']))
+        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html.convert(json = tweet_text['Text']),nlp=nlp_dict)
     return render_template('index.html')
     
 
