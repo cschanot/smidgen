@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from json2html import *
+import json2html
 import configparser
 import requests
 import json
@@ -166,8 +166,8 @@ def index():
         else:
             print("No results for %s" %query_params['query'].split()[0])
             return render_template('index.html')
-        htmlify = json2html(tweet_text['Text'])
-        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=htmlify)
+      
+        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html.convert(json = tweet_text['Text']))
     return render_template('index.html')
     
 
