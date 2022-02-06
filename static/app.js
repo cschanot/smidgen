@@ -19,5 +19,5 @@ $(window).on("scroll", function () {
   previous_query = document.getElementById("tweet").value;
   new_query = previous_query + ' ' + tweet_word;
   console.log(new_query)
-  return document.getElementById("tweet").innerHTML.value = new_query;
+  document.getElementById("tweet").innerHTML.value = new_query;
   } 
