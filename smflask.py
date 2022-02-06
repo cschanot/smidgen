@@ -165,7 +165,7 @@ def index():
             # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
             tweet_text_string = tweet_text_string[8:]
             # Strip tweet text of symbols.
-            tweet_text_string = strip_symbols(tweet_text_string)
+            # tweet_text_string = strip_symbols(tweet_text_string)
             # Strip stop words.
             tweet_text_string = nltk_filter(tweet_text_string)
 
