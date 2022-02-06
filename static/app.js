@@ -18,6 +18,6 @@ $(window).on("scroll", function () {
   //alert(tweet_word);
   previous_query = document.getElementById("tweet").value;
   new_query = previous_query + ' ' + tweet_word;
-  console.log(new_query)
+  console.log(previous_query)
   return document.getElementById("tweet").innerHTML.value = new_query;
   } 
