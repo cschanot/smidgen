@@ -161,6 +161,7 @@ def index():
             # Convert tweet text from JSON to String format.
             # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
             tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
+            test_string = tweet_text_string
             print("Post JSON -> String: ",tweet_text_string)
             # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
             tweet_text_string = tweet_text_string[8:]
@@ -188,7 +189,7 @@ def index():
             print("No results for %s" %query_params['query'].split()[0])
             return render_template('index.html')
       
-        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html.convert(json = tweet_text['Text']),nlp=json2html.convert(json = nlp_dict))
+        return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html.convert(json = tweet_text['Text'])test_string=test_string)
     return render_template('index.html')
     
 
