@@ -87,7 +87,7 @@ def strip_symbols(str):
     # Removing &amp; explicitly, as I dont want to filter the word "amp".
     str = str.replace("&amp;", "")
     # Unicode symbol " ’ " was not being removed by built in string.punctuation.
-    str = str.replace("’", "")
+    #str = str.replace("’", "")
 
     # Characters to replace
     for char in string.punctuation:
@@ -165,7 +165,7 @@ def index():
             # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
             tweet_text_string = tweet_text_string[8:]
             # Strip tweet text of symbols.
-            # tweet_text_string = strip_symbols(tweet_text_string)
+            tweet_text_string = strip_symbols(tweet_text_string)
             # Strip stop words.
             tweet_text_string = nltk_filter(tweet_text_string)
 
