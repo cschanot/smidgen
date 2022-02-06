@@ -14,7 +14,7 @@ $(window).on("scroll", function () {
   }
 })
   function Yeet_Word(tweet_word) {
-  console.log("yeet word called")
+  console.log(tweet_word)
   //alert(tweet_word);
   previous_query = document.getElementById("tweet").value;
   new_query = previous_query + ' ' + tweet_word;
