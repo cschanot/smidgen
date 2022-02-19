@@ -13,11 +13,23 @@ $(window).on("scroll", function () {
     $('nav').removeClass('black');
   }
 })
-  function Yeet_Word(tweet_word) {
+
+function Yeet_Word(tweet_word) {
   console.log(tweet_word)
   //alert(tweet_word);
   previous_query = document.getElementById("tweet").value;
   new_query = previous_query + ' ' + tweet_word;
   console.log(new_query)
   document.getElementById("tweet").value = new_query;
-  } 
+}
+
+function tweet_input() {
+
+}
+
+function extra_query()
+{
+  document.getElementById("add_tweet_query").addEventListener("click", function () {
+    document.getElementById("tweet_in").innerHTML += '<input type="text" name="result_array[]" value="" /><br>'
+  })
+}

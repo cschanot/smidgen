@@ -109,7 +109,15 @@
     <button type="submit">Submit</button>
   </form> -->
 
-  <form action="" method="post">
+  <h3>Multi Query</h3>
+  <form class="tweet_in" id="tweet_in" action="" method="post">
+    <input type="text" name="result_array[]" value="" /><br>
+    <button type="button" name="add_tweet_query" onclick="extra_query()"></button>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h3>Simple Single Query</h3>
+  <form class="tweet_in" action="" method="post">
     <label for="tweet">Tweet:</label>
     <input type="text" id="tweet" name="tweet" value="{{orig_tweet}}" placeholder="tweet">
     <button type="submit">Submit</button>
