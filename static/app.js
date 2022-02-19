@@ -43,3 +43,14 @@ function extra_query()
   document.getElementById('tweet_in').insertAdjacentHTML("beforeend", tweet_input);
   count++;
 }
+
+document.getElementById("add_tweet_query").onclick = function() {
+  var label = document.createElement("label");
+  var input = document.createElement("input");
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "result_array[]");
+  input.setAttribute("value", "");
+  label.appendChild(input);
+  document.getElementById("tweet_in").appendChild(label);
+  return false;
+};
