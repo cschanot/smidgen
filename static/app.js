@@ -48,11 +48,12 @@ function extra_query()
 */
 
 document.getElementById("add_tweet_query").onclick = function() {
-  var label = document.createElement("label");
+  var label = document.createElement("div");
   var input = document.createElement("input");
   input.setAttribute("type", "text");
   input.setAttribute("name", "result_array[]");
   input.setAttribute("value", "");
+  label.setAttribute("value", "Tweet:")
   label.appendChild(input);
   document.getElementById("tweet_in").appendChild(label);
   return false;
