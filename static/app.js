@@ -33,6 +33,8 @@ tweet_input.setAttribute("class", "tweet_input");
 tweet_input.setAttribute("id", "tweet_input");
 tweet_input.setAttribute("value", "tweet_input");
 */
+
+/*
 function extra_query()
 {
   count++
@@ -43,6 +45,7 @@ function extra_query()
   document.getElementById('tweet_in').insertAdjacentHTML("beforeend", tweet_input);
   count++;
 }
+*/
 
 document.getElementById("add_tweet_query").onclick = function() {
   var label = document.createElement("label");
