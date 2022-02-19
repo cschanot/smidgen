@@ -30,16 +30,12 @@ var i = 0;
 
 function extra_query()
 {
-  /*
   count++
-
-  document.getElementById("tweet_in").innerHTML += '<label for="tweet">Tweet (', count, '):</label>'
-  document.getElementById("tweet_in").innerHTML += '<input type="text" name="result_array[]" value="" /><br>'
-  */
+  var tweet_label = '<label for="tweet">Tweet (' += count += ')</label>'
+  var tweet_input = '<input type="text" name="result_array[]" value="" /><br>'
 
   document.getElementById('add_tweet_query').click(function(){
-  var newE = ('<input/>').attr({type:'text',name:'data[]',value:i,'class':'inputs'});
-  document.getElementById('tweet_in').append(newE).hide().fadeIn('1000');
-  i++;
+  document.getElementById('tweet_in').append(tweet_label).hide().fadeIn('1000');
+  document.getElementById('tweet_in').append(tweet_input).hide().fadeIn('1000');
 });
 }
