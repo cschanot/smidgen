@@ -27,7 +27,12 @@ function tweet_input() {
 
 }
 var count = 0;
-
+/*
+var tweet_input = document.createElement("form");
+tweet_input.setAttribute("class", "tweet_input");
+tweet_input.setAttribute("id", "tweet_input");
+tweet_input.setAttribute("value", "tweet_input");
+*/
 function extra_query()
 {
   count++
@@ -35,5 +40,5 @@ function extra_query()
   //var tweet_input = '<input type="text" name="result_array[]" value="" /><br>';
 
   //document.getElementById('tweet_in').append(tweet_label).hide().fadeIn('1000');
-  document.getElementById('tweet_in').innerHTML += '<input type="text" name="result_array[]" value="" /><br>';
+  document.getElementById('tweet_in').insertAdjacentElement("beforeend", '<input type="text" name="result_array[]" value="" /><br>');
 }
