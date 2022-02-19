@@ -26,8 +26,20 @@ function Yeet_Word(tweet_word) {
 function tweet_input() {
 
 }
+var i = 0;
 
 function extra_query()
 {
+  /*
+  count++
+
+  document.getElementById("tweet_in").innerHTML += '<label for="tweet">Tweet (', count, '):</label>'
   document.getElementById("tweet_in").innerHTML += '<input type="text" name="result_array[]" value="" /><br>'
+  */
+
+  document.getElementsByClassName('.add_tweet_query').click(function(){
+  var newE = ('<input/>').attr({type:'text',name:'data[]',value:i,'class':'inputs'});
+  document.getElementsByClassName('.tweet_in').append(newE).hide().fadeIn('1000');
+  i++;
+});
 }
