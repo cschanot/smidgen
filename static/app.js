@@ -29,7 +29,5 @@ function tweet_input() {
 
 function extra_query()
 {
-  document.getElementById("add_tweet_query").addEventListener("click", function () {
-    document.getElementById("tweet_in").innerHTML += '<input type="text" name="result_array[]" value="" /><br>'
-  })
+  document.getElementById("tweet_in").innerHTML += '<input type="text" name="result_array[]" value="" /><br>'
 }
