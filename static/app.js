@@ -37,9 +37,9 @@ function extra_query()
   document.getElementById("tweet_in").innerHTML += '<input type="text" name="result_array[]" value="" /><br>'
   */
 
-  document.getElementsByClassName('.add_tweet_query').click(function(){
+  document.getElementById('add_tweet_query').click(function(){
   var newE = ('<input/>').attr({type:'text',name:'data[]',value:i,'class':'inputs'});
-  document.getElementsByClassName('.tweet_in').append(newE).hide().fadeIn('1000');
+  document.getElementById('tweet_in').append(newE).hide().fadeIn('1000');
   i++;
 });
 }
