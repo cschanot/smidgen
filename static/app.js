@@ -34,6 +34,6 @@ function extra_query()
   //var tweet_label = '<label for="tweet">Tweet (' += count += ')</label>';
   var tweet_input = '<input type="text" name="result_array[]" value="" /><br>';
 
-  document.getElementById('tweet_in').append(tweet_label).hide().fadeIn('1000');
+  //document.getElementById('tweet_in').append(tweet_label).hide().fadeIn('1000');
   document.getElementById('tweet_in').append(tweet_input).hide().fadeIn('1000');
 }
