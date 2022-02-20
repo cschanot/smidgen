@@ -11,6 +11,7 @@ from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
 import spacy
+import time
 
 nlptweet = spacy.load("en_core_web_sm")
 
@@ -112,7 +113,8 @@ def index():
                         'expansions': 'author_id',
                         'user.fields': 'name,username,location'}
                 print(query_params)
-                json_responsez.append(tweet_array[tz])
+                json_responsez.append(connect_to_endpoint(search_url, query_params))
+                time.sleep(2)
         print(json_responsez)
         
         tweet = request.form.get("tweet")
