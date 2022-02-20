@@ -151,26 +151,7 @@ def index():
                     for entity in doc.ents:
                         print(entity.text, entity.label_)
         
-        
-        if(json_response['meta']['result_count'] != 0):
-        # Saving Tweet ID's + Tweet text.
-            for i in json_response['data']:
-                #print("id (%s):" %count, i['id'])
-                #print("text (%s):" %count, i['text'])
-                tweet_ids['ID'].append(i['id'])
-                tweet_text['Text'].append(i['text'])
-            print("Tweet Text Original: ", tweet_text)
-
-            print("\n------- Tweet IDs -------")
-            for i in tweet_ids['ID']:
-                print("Tweet ID (%s):" %count,i)
-                count += 1
-            count = 1
-
-            print("\n------- Tweet Text -------")
-            for i in tweet_text['Text']:
-                print("Tweet text (%s):" %count,i)
-                count += 1
+         
         for x in range(len(json_responsez)): 
             if(json_responsez[x]['meta']['result_count'] != 0):
         # Saving Tweet ID's + Tweet text.
@@ -191,6 +172,26 @@ def index():
                 for i in tweet_text['Text']:
                     print("Tweet text (%s):" %count,i)
                     count += 1
+
+        if(json_response['meta']['result_count'] != 0 and count < 1):
+        # Saving Tweet ID's + Tweet text.
+            for i in json_response['data']:
+                #print("id (%s):" %count, i['id'])
+                #print("text (%s):" %count, i['text'])
+                tweet_ids['ID'].append(i['id'])
+                tweet_text['Text'].append(i['text'])
+            print("Tweet Text Original: ", tweet_text)
+
+            print("\n------- Tweet IDs -------")
+            for i in tweet_ids['ID']:
+                print("Tweet ID (%s):" %count,i)
+                count += 1
+            count = 1
+
+            print("\n------- Tweet Text -------")
+            for i in tweet_text['Text']:
+                print("Tweet text (%s):" %count,i)
+                count += 1
 
             #print(tweet_text['Text'])
 
