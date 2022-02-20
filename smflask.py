@@ -114,7 +114,7 @@ def index():
                         'user.fields': 'name,username,location'}
                 print(query_params)
                 json_responsez.append(connect_to_endpoint(search_url, query_params))
-                #time.sleep(2)
+                time.sleep(1)
         print(json_responsez)
         
         tweet = request.form.get("tweet")
