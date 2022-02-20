@@ -47,6 +47,7 @@ function extra_query()
 }
 */
 
+// Dynamically add extra query spaces for a multi-query.
 document.getElementById("add_tweet_query_button").onclick = function() {
   var label = document.createElement("div");
   var input = document.createElement("input");
