@@ -110,6 +110,7 @@ def index():
                         'tweet.fields': 'public_metrics,created_at,lang,source',
                         'expansions': 'author_id',
                         'user.fields': 'name,username,location'}
+                print(query_params)
                 json_responsez.append(connect_to_endpoint(search_url, query_params))
         print(json_responsez)
         print("TWEET ARRAY: ", tweet_array)
