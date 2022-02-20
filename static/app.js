@@ -56,6 +56,6 @@ document.getElementById("add_tweet_query_button").onclick = function() {
   input.setAttribute("id", "multi_tweet");
   label.setAttribute("value", "Tweet:")
   label.appendChild(input);
-  document.getElementById("multi_query").appendChild(input);
+  document.getElementById("multi_query").appendChild(label);
   return false;
 };
