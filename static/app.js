@@ -48,14 +48,14 @@ function extra_query()
 */
 
 document.getElementById("add_tweet_query_button").onclick = function() {
-  //var label = document.createElement("div");
+  var label = document.createElement("div");
   var input = document.createElement("input");
   input.setAttribute("type", "text");
   input.setAttribute("name", "result_array[]");
   input.setAttribute("value", "");
   input.setAttribute("id", "multi_tweet");
-  //label.setAttribute("value", "Tweet:")
-  //label.appendChild(input);
+  label.setAttribute("value", "Tweet:")
+  label.appendChild(input);
   document.getElementById("multi_query").appendChild(input);
   return false;
 };
