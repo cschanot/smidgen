@@ -120,7 +120,7 @@ def index():
                         'tweet.fields': 'public_metrics,created_at,lang,source',
                         'expansions': 'author_id',
                         'user.fields': 'name,username,location'}
-        json_response = connect_to_endpoint(search_url, query_params)
+        #json_response = connect_to_endpoint(search_url, query_params)
 
         # Example of printing nested dictionary key-value pairs.
         count = 1
