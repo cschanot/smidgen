@@ -103,7 +103,7 @@ def index():
     if request.method == "POST":
         # getting input with name = fname in HTML form
         tweet_array = request.form.get("result_array[]")
-        print("TWEET ARRAY: ", tweet_array)
+        print("TWEET ARRAY: ", type(tweet_array))
         tweet = request.form.get("tweet")
         #query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
         query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
