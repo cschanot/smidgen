@@ -22,8 +22,8 @@ print(stopwords.words('english'))
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
-#bearer_token = "AAAAAAAAAAAAAAAAAAAAABmiUgEAAAAA6h2vLrTsUWElFlXE1cutt7stObk%3DDUaoRcksG7VjubGkvCYk01BT16sV0IhmneaXqG0VaO1wOhgAIq"
-bearer_token = "AAAAAAAAAAAAAAAAAAAAAM6jYAEAAAAAzE7k%2Ba6IK623MI3ZgV6LqQM%2BUrc%3DgMkuLLmpagzzj5kUb6umPGwVvMZvhwrAWXmLxYDxZvChRF16K8"
+bearer_token = "AAAAAAAAAAAAAAAAAAAAABmiUgEAAAAA6h2vLrTsUWElFlXE1cutt7stObk%3DDUaoRcksG7VjubGkvCYk01BT16sV0IhmneaXqG0VaO1wOhgAIq"
+#bearer_token = "AAAAAAAAAAAAAAAAAAAAAM6jYAEAAAAAzE7k%2Ba6IK623MI3ZgV6LqQM%2BUrc%3DgMkuLLmpagzzj5kUb6umPGwVvMZvhwrAWXmLxYDxZvChRF16K8"
 search_url = "https://api.twitter.com/2/tweets/search/all"
 
 # Optional params: start_time,end_time,since_id,until_id,max_results,next_token,
