@@ -109,7 +109,7 @@ def index():
         print("TWEET ARRAY LEN", len(tweet_array))
 
         # If tweet_array exists continue
-        if tweet_array:
+        if len(tweet_array) > 0:
             for tz in range(len(tweet_array)):
                 #json_responsez = []
                 query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet_array[tz],
