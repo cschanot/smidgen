@@ -105,16 +105,19 @@ def index():
         # getting input with name = fname in HTML form
         tweet_array = request.form.getlist("result_array[]")
         print("TWEET ARRAY: ", tweet_array)
+        json_responsez = []
+
+        # If tweet_array exists continue
         if tweet_array:
             for tz in range(len(tweet_array)):
-                json_responsez = []
+                #json_responsez = []
                 query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet_array[tz],
                         'tweet.fields': 'public_metrics,created_at,lang,source',
                         'expansions': 'author_id',
                         'user.fields': 'name,username,location'}
                 print(query_params)
                 json_responsez.append(connect_to_endpoint(search_url, query_params))
-                time.sleep(1)
+                time.sleep(2)
         print(json_responsez)
         
         tweet = request.form.get("tweet")
