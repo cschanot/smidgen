@@ -110,6 +110,12 @@ def index():
         # Initialize multi-query twitter response array.
         json_responsez = []
 
+        # Other shit...
+        count = 1
+        tweet_ids = {"ID":[]}
+        tweet_text = {"Text":[]}
+        nlp_dict = { 0: {'text': '', 'noun_phrases': '', 'verbs': '', 'entities': ''}}
+
         # Get single query term.
         tweet = request.form.get("tweet")
 
@@ -146,7 +152,7 @@ def index():
                     for i in tweet_text['Text']:
                         print("Tweet text (%s):" %count,i)
                         count += 1
-        
+                        
         # If single query is not empty and multi-query was not ran.
         if (tweet != "" and len(tweet_array)==0):
             query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
@@ -156,10 +162,10 @@ def index():
             json_response = connect_to_endpoint(search_url, query_params)
 
             # Example of printing nested dictionary key-value pairs.
-            count = 1
-            tweet_ids = {"ID":[]}
-            tweet_text = {"Text":[]}
-            nlp_dict = { 0: {'text': '', 'noun_phrases': '', 'verbs': '', 'entities': ''}}
+            #count = 1
+            #tweet_ids = {"ID":[]}
+            #tweet_text = {"Text":[]}
+            #nlp_dict = { 0: {'text': '', 'noun_phrases': '', 'verbs': '', 'entities': ''}}
             # Testing json_response output when query results in no hits.
             #print(json_response)
             for numTweets in range(len(json_response['data'])):
