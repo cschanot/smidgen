@@ -152,7 +152,27 @@ def index():
                     for i in tweet_text['Text']:
                         print("Tweet text (%s):" %count,i)
                         count += 1
-                        
+
+                    # Convert tweet text from JSON to String format.
+                    # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
+                    tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
+                    test_string = tweet_text_string
+                    print("Post JSON -> String: ",tweet_text_string)
+                    # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
+                    tweet_text_string = tweet_text_string[8:]
+                    # Strip tweet text of symbols.
+                    tweet_text_string = strip_symbols(tweet_text_string)
+                    # Strip stop words.
+                    tweet_text_string = nltk_filter(tweet_text_string)
+
+                    print("\n\nFormatted tweet text:",*tweet_text_string)
+
+                    # Save top 15 words.
+                    word_count = Counter(tweet_text_string).most_common(15)
+                    #print(type(word_count))
+                    # Print top 15 words.
+                    print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
+
         # If single query is not empty and multi-query was not ran.
         if (tweet != "" and len(tweet_array)==0):
             query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
