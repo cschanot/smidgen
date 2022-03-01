@@ -175,7 +175,7 @@ def index():
 
         # If single query is not empty and multi-query was not ran.
         print(tweet)
-        if (len(tweet) > 0):
+        if (tweet):
             query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
                             'tweet.fields': 'public_metrics,created_at,lang,source',
                             'expansions': 'author_id',
