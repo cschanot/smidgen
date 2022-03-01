@@ -103,12 +103,17 @@ def index():
     #query_params={'query': 'test place_country:US -birthday -is:retweet'}
     if request.method == "POST":
         # getting input with name = fname in HTML form
+        # Get multi-query terms.
         tweet_array = request.form.getlist("result_array[]")
         print("TWEET ARRAY: ", tweet_array)
-        json_responsez = []
-        print("TWEET ARRAY LEN", len(tweet_array))
 
-        # If tweet_array exists continue
+        # Initialize multi-query twitter response array.
+        json_responsez = []
+
+        # Get single query term.
+        tweet = request.form.get("tweet")
+
+        # If tweet_array exists (multi-query) continue
         if len(tweet_array) > 0:
             for tz in range(len(tweet_array)):
                 #json_responsez = []
@@ -118,48 +123,67 @@ def index():
                         'user.fields': 'name,username,location'}
                 print(query_params)
                 json_responsez.append(connect_to_endpoint(search_url, query_params))
-                time.sleep(2)
-        print(json_responsez)
-        
-        tweet = request.form.get("tweet")
-        #query_params={'query': '%s place_country:US -birthday -is:retweet' % tweet}
-        query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
-                        'tweet.fields': 'public_metrics,created_at,lang,source',
-                        'expansions': 'author_id',
-                        'user.fields': 'name,username,location'}
-        json_response = connect_to_endpoint(search_url, query_params)
+                # Required - Full-archive has a 1 request / 1 second limit
+                time.sleep(1.5)
+            #print(json_responsez)
+            for x in range(len(json_responsez)): 
+                if(json_responsez[x]['meta']['result_count'] != 0):
+                    # Saving Tweet ID's + Tweet text.
+                    for i in json_responsez[x]['data']:
+                        #print("id (%s):" %count, i['id'])
+                        #print("text (%s):" %count, i['text'])
+                        tweet_ids['ID'].append(i['id'])
+                        tweet_text['Text'].append(i['text'])
+                    print("Tweet Text Original: ", tweet_text)
 
-        # Example of printing nested dictionary key-value pairs.
-        count = 1
-        tweet_ids = {"ID":[]}
-        tweet_text = {"Text":[]}
-        nlp_dict = { 0: {'text': '', 'noun_phrases': '', 'verbs': '', 'entities': ''}}
-        # Testing json_response output when query results in no hits.
-        #print(json_response)
-        for numTweets in range(len(json_response['data'])):
-                tweet_text_nlp =  json_response['data'][numTweets]['text']
-                print(tweet_text_nlp)
-                json_nlp = tweet_text_nlp
-                nlp_dict[numTweets] = {}
-                nlp_dict[numTweets]['text'] = tweet_text
-        # Do NLP shit
-                if len(json_nlp.split()) > 1:
-                    doc = nlptweet(json_nlp)
-                    noun_phrases = [chunk.text for chunk in doc.noun_chunks]
-                    nlp_dict[numTweets]['noun_phrases'] = noun_phrases
-                    verbs = [token.lemma_ for token in doc if token.pos_ == "VERB"]
-                    nlp_dict[numTweets]['verbs'] = verbs
-                    print("Noun phrases:", noun_phrases)
-                    print("Verbs:", verbs)
-                    nlp_dict[numTweets]['entities'] = doc.ents
-                    for entity in doc.ents:
-                        print(entity.text, entity.label_)
+                    print("\n------- Tweet IDs -------")
+                    for i in tweet_ids['ID']:
+                        print("Tweet ID (%s):" %count,i)
+                        count += 1
+                    count = 1
+
+                    print("\n------- Tweet Text -------")
+                    for i in tweet_text['Text']:
+                        print("Tweet text (%s):" %count,i)
+                        count += 1
         
-         
-        for x in range(len(json_responsez)): 
-            if(json_responsez[x]['meta']['result_count'] != 0):
-        # Saving Tweet ID's + Tweet text.
-                for i in json_responsez[x]['data']:
+        # If single query is not empty and multi-query was not ran.
+        if (tweet != "" and len(tweet_array)==0):
+            query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
+                            'tweet.fields': 'public_metrics,created_at,lang,source',
+                            'expansions': 'author_id',
+                            'user.fields': 'name,username,location'}
+            json_response = connect_to_endpoint(search_url, query_params)
+
+            # Example of printing nested dictionary key-value pairs.
+            count = 1
+            tweet_ids = {"ID":[]}
+            tweet_text = {"Text":[]}
+            nlp_dict = { 0: {'text': '', 'noun_phrases': '', 'verbs': '', 'entities': ''}}
+            # Testing json_response output when query results in no hits.
+            #print(json_response)
+            for numTweets in range(len(json_response['data'])):
+                    tweet_text_nlp =  json_response['data'][numTweets]['text']
+                    print(tweet_text_nlp)
+                    json_nlp = tweet_text_nlp
+                    nlp_dict[numTweets] = {}
+                    nlp_dict[numTweets]['text'] = tweet_text
+            # Do NLP shit
+                    if len(json_nlp.split()) > 1:
+                        doc = nlptweet(json_nlp)
+                        noun_phrases = [chunk.text for chunk in doc.noun_chunks]
+                        nlp_dict[numTweets]['noun_phrases'] = noun_phrases
+                        verbs = [token.lemma_ for token in doc if token.pos_ == "VERB"]
+                        nlp_dict[numTweets]['verbs'] = verbs
+                        print("Noun phrases:", noun_phrases)
+                        print("Verbs:", verbs)
+                        nlp_dict[numTweets]['entities'] = doc.ents
+                        for entity in doc.ents:
+                            print(entity.text, entity.label_)
+
+            if(json_response['meta']['result_count'] != 0 and count < 1):
+                # Saving Tweet ID's + Tweet text.
+                for i in json_response['data']:
                     #print("id (%s):" %count, i['id'])
                     #print("text (%s):" %count, i['text'])
                     tweet_ids['ID'].append(i['id'])
@@ -177,59 +201,38 @@ def index():
                     print("Tweet text (%s):" %count,i)
                     count += 1
 
-        if(json_response['meta']['result_count'] != 0 and count < 1):
-        # Saving Tweet ID's + Tweet text.
-            for i in json_response['data']:
-                #print("id (%s):" %count, i['id'])
-                #print("text (%s):" %count, i['text'])
-                tweet_ids['ID'].append(i['id'])
-                tweet_text['Text'].append(i['text'])
-            print("Tweet Text Original: ", tweet_text)
+                #print(tweet_text['Text'])
 
-            print("\n------- Tweet IDs -------")
-            for i in tweet_ids['ID']:
-                print("Tweet ID (%s):" %count,i)
-                count += 1
-            count = 1
+                # Convert tweet text from JSON to String format.
+                # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
+                tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
+                test_string = tweet_text_string
+                print("Post JSON -> String: ",tweet_text_string)
+                # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
+                tweet_text_string = tweet_text_string[8:]
+                # Strip tweet text of symbols.
+                tweet_text_string = strip_symbols(tweet_text_string)
+                # Strip stop words.
+                tweet_text_string = nltk_filter(tweet_text_string)
 
-            print("\n------- Tweet Text -------")
-            for i in tweet_text['Text']:
-                print("Tweet text (%s):" %count,i)
-                count += 1
+                print("\n\nFormatted tweet text:",*tweet_text_string)
 
-            #print(tweet_text['Text'])
+                # Save top 15 words.
+                word_count = Counter(tweet_text_string).most_common(15)
+                #print(type(word_count))
+                # Print top 15 words.
+                print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
 
-            # Convert tweet text from JSON to String format.
-            # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
-            tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
-            test_string = tweet_text_string
-            print("Post JSON -> String: ",tweet_text_string)
-            # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
-            tweet_text_string = tweet_text_string[8:]
-            # Strip tweet text of symbols.
-            tweet_text_string = strip_symbols(tweet_text_string)
-            # Strip stop words.
-            tweet_text_string = nltk_filter(tweet_text_string)
-
-            print("\n\nFormatted tweet text:",*tweet_text_string)
-
-            # Save top 15 words.
-            word_count = Counter(tweet_text_string).most_common(15)
-            #print(type(word_count))
-            # Print top 15 words.
-            print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
-
-            #print(tweet_ids)
-            #print("\nTweet Text Original: ",tweet_text_string)
-            #print(word_count(tweet_text_string))
-            
-            #print(tweet_text_string)
-            #print(Counter(tweet_text_string).most_common())
-            #print(tweet_text)
-        else:
-            print("No results for %s" %query_params['query'].split()[0])
-            return render_template('index.html')
-      
+                #print(tweet_ids)
+                #print("\nTweet Text Original: ",tweet_text_string)
+                #print(word_count(tweet_text_string))
+                
+                #print(tweet_text_string)
+                #print(Counter(tweet_text_string).most_common())
+                #print(tweet_text)
+            else:
+                print("No results for %s" %query_params['query'].split()[0])
+                return render_template('index.html')
         return render_template('index.html', top_words=word_count,orig_tweet=tweet, tweet_list=json2html.convert(json = tweet_text['Text']),test_string=test_string)
     return render_template('index.html')
     
