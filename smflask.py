@@ -106,6 +106,7 @@ def index():
         tweet_array = request.form.getlist("result_array[]")
         print("TWEET ARRAY: ", tweet_array)
         json_responsez = []
+        print("TWEET ARRAY LEN", len(tweet_array))
 
         # If tweet_array exists continue
         if tweet_array:
