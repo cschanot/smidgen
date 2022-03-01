@@ -208,7 +208,7 @@ def index():
                         for entity in doc.ents:
                             print(entity.text, entity.label_)
 
-            if(json_response['meta']['result_count'] != 0 and count < 1):
+            if(json_response['meta']['result_count'] != 0):
                 # Saving Tweet ID's + Tweet text.
                 for i in json_response['data']:
                     #print("id (%s):" %count, i['id'])
