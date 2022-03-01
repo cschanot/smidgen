@@ -174,7 +174,8 @@ def index():
                     print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
 
         # If single query is not empty and multi-query was not ran.
-        if (tweet != ""):
+        print(tweet)
+        if (tweet):
             query_params = {'query': '%s place_country:US -birthday -is:retweet' % tweet,
                             'tweet.fields': 'public_metrics,created_at,lang,source',
                             'expansions': 'author_id',
