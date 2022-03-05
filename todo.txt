@@ -17,3 +17,9 @@ TODO:
     ** Fixed (for now) by hiding ALL buttons initially, then loading only the appropriate one. **
 
 4. Find a way to keep links intact, and perhaps @mentions and #hashtags as these are destroyed during parsing/stripping.
+
+5. Multi-Query:
+   - If a query returns no results, display that, for example
+   > User searches the multi query "test" + "1ausg08708g08ausdgiopu0"
+   > The 2nd query "1ausg08708g08ausdgiopu0" likely returned nothing, and you simply have a list of tweets with "test"
+   > Revoke merging the 2nd empty list and tell the user no results for "1ausg08708g08ausdgiopu0", display the rest of the list as it already does.
