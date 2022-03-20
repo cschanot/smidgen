@@ -1,29 +1,13 @@
-/*
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, child, onValue, update } from "firebase/database";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import {firebaseConfig} from "./firebaseConfig.js";
-*/
 
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import {fileURLToPath} from 'url';
-
-/*
-const defaultApp = initializeApp(firebaseConfig);
-const db = getDatabase(defaultApp);
-const auth = getAuth(defaultApp);
-*/
-
+const express = require('express');
+const path = require('path');
 const app = express();
-const port = 8080;
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const port = 3030;
 
-
+var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-
+app.use(require('body-parser').urlencoded({ extended: false }));
+app.set('view engine', 'jade');
 // Directory for JS/CSS
 app.use(express.static(__dirname + '/static'));
 
@@ -75,13 +59,13 @@ app.get('/', function(req, res) {
 
 app.post('/papi', function(req, res) {
     console.log(req.body)
-    res.send(req.body);
+    // res.send(req.body);
     const { exec } = require("child_process");
     if (req.body["tweet"]) {
     console.log(req.body["tweet"]) 
     let execcmd = "python3 full_archive.py S " + req.body["tweet"];
     exec(execcmd, (error, stdout, stderr) => {
-    console.log(`stdout: ${stdout}`);
+    res.send(`stdout: ${stdout}`);
 });
     }
     if (req.body["result_array[]"]) {
