@@ -1,18 +1,49 @@
-const express = require('express');
-const path = require('path');
-const app = express();
+/*
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, child, onValue, update } from "firebase/database";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import {firebaseConfig} from "./firebaseConfig.js";
+*/
 
-// view engine setup
-app.use(require('body-parser').urlencoded({ extended: false }));
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+/*
+const defaultApp = initializeApp(firebaseConfig);
+const db = getDatabase(defaultApp);
+const auth = getAuth(defaultApp);
+*/
+
+const app = express();
+const port = 8080;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+var jsonParser = bodyParser.json()
 
 // Directory for JS/CSS
 app.use(express.static(__dirname + '/static'));
 
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'index.html'));
+// Ran every time a request is made to express.
+app.use( function ( req, res, next ) {
+    const { url, path: routePath }  = req ;
+    console.log( 'Request: Timestamp:', new Date().toLocaleString(), ', URL (' + url + '), PATH (' + routePath + ').' ) ;
+    next();
 });
+
+//Runs below command when specified path is accessed. "127.0.0.1:8080/api/v1/now" will run -> res.json({now: new Date().toString()});
+app.get('/api/v1/now', (req, res) => {
+    res.json({now: new Date().toString()});
+});
+
+/*
+app.get('/firebaseConfig.js', (req, res) => {
+    res.status(403).end();
+});
+*/
 
 app.get('/index', jsonParser, function (req, res) {
     res.sendFile(path.join(__dirname, '/templates/index.html'));
@@ -31,6 +62,17 @@ app.get('/auth', jsonParser, function (req, res) {
     })
     */
 })
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '/templates/index.html'));
+  });
+
+//app.get('/', express.static(path.join(__dirname, '')))
+
+app.listen(port, () => {
+    console.log('Server running on port http://127.0.0.1:'+port);
+});
+
 
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/templates/index.html'));
@@ -56,5 +98,6 @@ app.post('/papi', function(req, res) {
     }
 });
 
-
-module.exports = app;
+app.listen(port, () => {
+    console.log('Server running on port http://127.0.0.1:'+port);
+});
