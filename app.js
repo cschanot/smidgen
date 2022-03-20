@@ -7,6 +7,9 @@ app.use(require('body-parser').urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+// Directory for JS/CSS
+app.use(express.static(__dirname + '/static'));
+
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
