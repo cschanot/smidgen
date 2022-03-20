@@ -1,3 +1,4 @@
+import sys
 from pickle import FALSE
 from json2html import *
 import requests
@@ -236,6 +237,9 @@ def multi_query(query_params):
     # Top word output of combined arrays.
     print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
 
-# Function Testing
-single_query(example_query)
-multi_query(example_query_array)
+# Function Testing\
+if len(sys.argv) > 1:
+    if sys.argv[1] == 'S':
+        single_query(sys.argv[2])
+    if sys.argv[1] == 'M':
+        multi_query(sys.argv[2])
