@@ -1,11 +1,28 @@
 {
-  "type": "module",
   "dependencies": {
     "express": "^4.17.3",
     "firebase": "^9.6.9",
     "json2html": "^0.0.8",
     "nltk": "^0.0.1",
     "pip": "^0.0.1",
+    "require": "^2.4.20",
     "spacy": "^0.0.4"
-  }
+  },
+  "name": "smidgen",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cschanot/smidgen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cschanot/smidgen/issues"
+  },
+  "homepage": "https://github.com/cschanot/smidgen#readme",
+  "description": ""
 }
