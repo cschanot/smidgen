@@ -14,6 +14,28 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/index', jsonParser, function (req, res) {
+    res.sendFile(path.join(__dirname, '/templates/index.html'));
+});
+
+app.get('/auth', jsonParser, function (req, res) {
+    res.sendFile(path.join(__dirname, '/templates/auth.html'));
+    /*
+    let uid = req.body.uid;
+    db.collection('projects').doc('default_new').collection('users').doc(uid).set({
+        role: 'user'
+    }).then(() => {
+        console.log('New user logged');
+    }).catch(err => {
+        console.error("Error logging new user", err);
+    })
+    */
+})
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '/templates/index.html'));
+  });
+
 app.post('/papi', function(req, res) {
     console.log(req.body)
     res.send(req.body);
