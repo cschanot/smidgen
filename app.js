@@ -1,4 +1,3 @@
-
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -6,21 +5,30 @@ const port = 3030;
 
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-app.use(require('body-parser').urlencoded({ extended: false }));
+app.use(require('body-parser').urlencoded({
+    extended: false
+}));
+
 app.set('view engine', 'jade');
+
 // Directory for JS/CSS
 app.use(express.static(__dirname + '/static'));
 
 // Ran every time a request is made to express.
-app.use( function ( req, res, next ) {
-    const { url, path: routePath }  = req ;
-    console.log( 'Request: Timestamp:', new Date().toLocaleString(), ', URL (' + url + '), PATH (' + routePath + ').' ) ;
+app.use(function (req, res, next) {
+    const {
+        url,
+        path: routePath
+    } = req;
+    console.log('Request: Timestamp:', new Date().toLocaleString(), ', URL (' + url + '), PATH (' + routePath + ').');
     next();
 });
 
 //Runs below command when specified path is accessed. "127.0.0.1:8080/api/v1/now" will run -> res.json({now: new Date().toString()});
 app.get('/api/v1/now', (req, res) => {
-    res.json({now: new Date().toString()});
+    res.json({
+        now: new Date().toString()
+    });
 });
 
 /*
@@ -47,36 +55,43 @@ app.get('/auth', jsonParser, function (req, res) {
     */
 })
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/templates/index.html'));
-  });
+});
 
 //app.get('/', express.static(path.join(__dirname, '')))
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/templates/index.html'));
-  });
+});
 
-app.post('/papi', function(req, res) {
+app.post('/result', function (req, res) {
     console.log(req.body)
     // res.send(req.body);
-    const { exec } = require("child_process");
+    const {
+        exec
+    } = require("child_process");
     if (req.body["tweet"]) {
-    console.log(req.body["tweet"]) 
-    let execcmd = "python3 full_archive.py S " + req.body["tweet"];
-    exec(execcmd, (error, stdout, stderr) => {
-    res.send(`stdout: ${stdout}`);
-});
+        console.log(req.body["tweet"])
+        let execcmd = "python full_archive.py S " + req.body["tweet"];
+        exec(execcmd, (error, stdout, stderr) => {
+            res.send('stdout: '+ stdout);
+            console.log('stderr:' + stderr);
+            console.log('error:' + error);
+        });
     }
     if (req.body["result_array[]"]) {
-    console.log(req.body["result_array[]"]) 
-     let execcmd = "python3 full_archive.py M " + req.body["result_array[]"];
-     exec(execcmd, (error, stdout, stderr) => {
-    console.log(`stdout: ${stdout}`);
-});
+        console.log(req.body["result_array[]"])
+        let execcmd = "python full_archive.py M " + req.body["result_array[]"];
+        exec(execcmd, (error, stdout, stderr) => {
+            res.send(`stdout: ${stdout}`);
+            console.log(`stdout: ${stdout}`);
+            console.log('stderr:' + stderr);
+            console.log('error:' + error);
+        });
     }
 });
 
 app.listen(port, () => {
-    console.log('Server running on port http://127.0.0.1:'+port);
+    console.log('Server running on port http://127.0.0.1:' + port);
 });

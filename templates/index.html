@@ -110,7 +110,7 @@
   </form> -->
 
   <h3>Multi Query</h3>
-  <form class="tweet_in" id="tweet_in" action="" method="post">
+  <form class="tweet_in" id="tweet_in" action="/result" method="post">
     <div id="multi_query" class="multi_query">
     <input type="text" id="multi_tweet" name="result_array[]" value="" /><br>
     </div>
@@ -120,9 +120,9 @@
 
 
   <h3>Single Query</h3>
-  <form class="tweet_in" action="" method="post">
+  <form class="tweet_in" action="/result" method="post">
     <label for="tweet">Tweet:</label>
-    <input type="text" id="tweet" name="tweet" value="{{orig_tweet}}" placeholder="tweet">
+    <input type="text" id="tweet" name="tweet" value="bacon" placeholder="tweet">
     <button type="submit">Submit</button>
   </form>
   </div>

@@ -1,6 +1,5 @@
 import sys
-from pickle import FALSE
-from json2html import *
+#from json2html import *
 import requests
 import json
 import nltk
@@ -8,18 +7,20 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
-import spacy
 import time
 
 #import os
 #import datetime
 #import configparser
 
-nlptweet = spacy.load("en_core_web_sm")
+nltk.download('stopwords', quiet=True)
+#nltk.download('word_tokenize', quiet=True)
+nltk.download('punkt', quiet=True)
 
-nltk.download('stopwords')
-nltk.download('word_tokenize')
-nltk.download('punkt')
+# Passing output during exec call was throwing an encoding error.
+# https://stackoverflow.com/questions/27092833/unicodeencodeerror-charmap-codec-cant-encode-characters
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8')
 
 #print(stopwords.words('english'))
 
@@ -58,7 +59,7 @@ def bearer_oauth(r):
 def connect_to_endpoint(url, params):
     response = requests.request(
         "GET", search_url, auth=bearer_oauth, params=params)
-    print(response.status_code)
+    print("Response code: " + str(response.status_code))
     if response.status_code != 200:
         raise Exception(response.status_code, response.text)
     return response.json()
@@ -107,7 +108,7 @@ def single_query(query):
     count = 1
     tweet_ids = {"ID":[]}
     tweet_text = {"Text":[]}
-    print(query)
+    #print(query)
 
     # If the query isn't empty, run the query.
     if (query):
@@ -150,6 +151,7 @@ def single_query(query):
             # Convert tweet text from JSON to String format.
             # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
             tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
+            #tweet_text_string = json.dumps(tweet_text)
             # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
             tweet_text_string = tweet_text_string[8:]
             # Strip tweet text of symbols.
@@ -166,7 +168,6 @@ def single_query(query):
             print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
         else:
             print("No results for %s" %query_params['query'].split()[0])
-            return FALSE
 
 
 # Multi-Query function || Input will need to be an array.
@@ -237,9 +238,15 @@ def multi_query(query_params):
     # Top word output of combined arrays.
     print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), query_params['query'].split()[0]),*word_count, sep="\n")
 
-# Function Testing\
+# Function Testing
+#print("ARGV1: " + sys.argv[1])
+#print("ARGV2: " + sys.argv[2])
+#print("Type:")
+#print(type(sys.argv[2]))
 if len(sys.argv) > 1:
     if sys.argv[1] == 'S':
         single_query(sys.argv[2])
     if sys.argv[1] == 'M':
         multi_query(sys.argv[2])
+
+#single_query(example_query)
