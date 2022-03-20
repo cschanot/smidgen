@@ -137,10 +137,12 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         console.log(window.location.pathname);
 
         // If the user is not logged in, redirect to the login page.
+        /*
         if(window.location.pathname != "/auth")
         {
             window.location = 'auth';
         }
+        */
 
         // Grab documents to hide/show
         if(loginForm)
