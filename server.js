@@ -102,57 +102,6 @@ app.post('/result', function (req, res) {
             console.log('error:' + error);
         });
     }
-
-    // 'spawn' Implementation.
-    const {
-        spawn
-    } = require("child_process");
-
-    // If single-query
-    if (req.body["tweet"]) {
-        console.log(req.body["tweet"]);
-        // Call python script with sys.argv[1] being "S" for single-query.
-        // sys.argv[2] here is the user input string.
-        // full_archive.py then calls the single_query function with user input.
-        const tweet_out = spawn('python', ['full_archive.py', 'S', req.body["tweet"]]);
-        tweet_out.stdout.on("data", function (data) {
-            dataFormat = data.toString();
-            res.send(`stdout: ${dataFormat}`);
-            console.log(`stdout: ${dataFormat}`);
-        });
-
-        tweet_out.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
-
-        tweet_out.on('close', (code) => {
-            console.log(`child process exited with code ${code}`);
-        });
-
-
-    }
-    // If multi-query
-    if (req.body["result_array[]"]) {
-        console.log(req.body["result_array[]"]);
-        // Call python script with sys.argv[1] being "M" for multi-query
-        // sys.argv[2] here is the user input array.
-        // full_archive.py then calls the multi_query function with user input array.
-        // UNTESTED
-        const tweet_out = spawn('python', ['full_archive.py', 'M', req.body["tweet"]]);
-        tweet_out.stdout.on("data", function (data) {
-            dataFormat = data.toString();
-            res.send(`stdout: ${dataFormat}`);
-            console.log(`stdout: ${dataFormat}`);
-        });
-
-        tweet_out.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
-        });
-
-        tweet_out.on('close', (code) => {
-            console.log(`child process exited with code ${code}`);
-        });
-    }
 });
 */
 
@@ -169,9 +118,10 @@ app.post('/result', function (req, res) {
     // If single-query
     if (req.body["tweet"]) {
         console.log(req.body["tweet"]);
-        // Call python script with sys.argv[1] being "S" for single-query.
-        // sys.argv[2] here is the user input string.
-        // full_archive.py then calls the single_query function with user input.
+        // spawn(command, [param1, ... ,paramN])
+        // full_archive.py 'S' req.body["tweet"] || Calls the script, with:
+        // sys.argv[1] being 'S' for single query.
+        // sys.argv[2] being req.body["tweet"] for the user input query.
         const tweet_out = spawn('python', ['full_archive.py', 'S', req.body["tweet"]]);
         tweet_out.stdout.on("data", function (data) {
             dataFormat = data.toString();
@@ -190,13 +140,11 @@ app.post('/result', function (req, res) {
 
     }
     // If multi-query
-    if (req.body["result_array[]"]) {
-        console.log(req.body["result_array[]"]);
-        // Call python script with sys.argv[1] being "M" for multi-query
-        // sys.argv[2] here is the user input array.
-        // full_archive.py then calls the multi_query function with user input array.
+    if (req.body["query_array[]"]) {
+        console.log(req.body["query_array[]"]);
+
         // UNTESTED
-        const tweet_out = spawn('python', ['full_archive.py', 'M', req.body["tweet"]]);
+        const tweet_out = spawn('python', ['full_archive.py', 'M', req.body["query_array[]"]]);
         tweet_out.stdout.on("data", function (data) {
             dataFormat = data.toString();
             res.send(`stdout: ${dataFormat}`);

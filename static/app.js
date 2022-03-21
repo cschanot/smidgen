@@ -52,7 +52,7 @@ document.getElementById("add_tweet_query_button").onclick = function() {
   var label = document.createElement("div");
   var input = document.createElement("input");
   input.setAttribute("type", "text");
-  input.setAttribute("name", "result_array[]");
+  input.setAttribute("name", "query_array[]");
   input.setAttribute("value", "");
   input.setAttribute("id", "multi_tweet");
   label.setAttribute("value", "Tweet:")
