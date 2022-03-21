@@ -3,13 +3,12 @@ const path = require('path');
 const app = express();
 const port = 3030;
 
+// Middleware for processing JSON objects.
 var bodyParser = require('body-parser')
 var jsonParser = bodyParser.json()
-app.use(require('body-parser').urlencoded({
+app.use(bodyParser.urlencoded({
     extended: false
 }));
-
-app.set('view engine', 'jade');
 
 // Directory for JS/CSS
 app.use(express.static(__dirname + '/static'));
@@ -64,14 +63,17 @@ app.get('/', function (req, res) {
 
 //app.get('/', express.static(path.join(__dirname, '')))
 
-// Exec call made when post is sent from index page. -> When the user submits a single or multi-query.
+// Child process created when post is sent from index page. -> When the user submits a single or multi-query.
+// 'exec' Implementation
+/*
 app.post('/result', function (req, res) {
     console.log(req.body)
     // res.send(req.body);
+
     const {
         exec
     } = require("child_process");
-    
+
     // If single-query
     if (req.body["tweet"]) {
         console.log(req.body["tweet"])
@@ -80,7 +82,7 @@ app.post('/result', function (req, res) {
         // full_archive.py then calls the single_query function with user input.
         let execcmd = "python full_archive.py S " + req.body["tweet"];
         exec(execcmd, (error, stdout, stderr) => {
-            res.send('stdout: '+ stdout);
+            res.send('stdout: ' + stdout);
             console.log('stderr:' + stderr);
             console.log('error:' + error);
         });
@@ -100,10 +102,118 @@ app.post('/result', function (req, res) {
             console.log('error:' + error);
         });
     }
+
+    // 'spawn' Implementation.
+    const {
+        spawn
+    } = require("child_process");
+
+    // If single-query
+    if (req.body["tweet"]) {
+        console.log(req.body["tweet"]);
+        // Call python script with sys.argv[1] being "S" for single-query.
+        // sys.argv[2] here is the user input string.
+        // full_archive.py then calls the single_query function with user input.
+        const tweet_out = spawn('python', ['full_archive.py', 'S', req.body["tweet"]]);
+        tweet_out.stdout.on("data", function (data) {
+            dataFormat = data.toString();
+            res.send(`stdout: ${dataFormat}`);
+            console.log(`stdout: ${dataFormat}`);
+        });
+
+        tweet_out.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        tweet_out.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+        });
+
+
+    }
+    // If multi-query
+    if (req.body["result_array[]"]) {
+        console.log(req.body["result_array[]"]);
+        // Call python script with sys.argv[1] being "M" for multi-query
+        // sys.argv[2] here is the user input array.
+        // full_archive.py then calls the multi_query function with user input array.
+        // UNTESTED
+        const tweet_out = spawn('python', ['full_archive.py', 'M', req.body["tweet"]]);
+        tweet_out.stdout.on("data", function (data) {
+            dataFormat = data.toString();
+            res.send(`stdout: ${dataFormat}`);
+            console.log(`stdout: ${dataFormat}`);
+        });
+
+        tweet_out.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        tweet_out.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+        });
+    }
+});
+*/
+
+// Child process created when post is sent from index page. -> When the user submits a single or multi-query.
+// 'spawn' Implementation
+app.post('/result', function (req, res) {
+    console.log(req.body)
+    // res.send(req.body);
+    // 'spawn' Implementation.
+    const {
+        spawn
+    } = require("child_process");
+
+    // If single-query
+    if (req.body["tweet"]) {
+        console.log(req.body["tweet"]);
+        // Call python script with sys.argv[1] being "S" for single-query.
+        // sys.argv[2] here is the user input string.
+        // full_archive.py then calls the single_query function with user input.
+        const tweet_out = spawn('python', ['full_archive.py', 'S', req.body["tweet"]]);
+        tweet_out.stdout.on("data", function (data) {
+            dataFormat = data.toString();
+            res.send(`stdout: ${dataFormat}`);
+            console.log(`stdout: ${dataFormat}`);
+        });
+
+        tweet_out.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        tweet_out.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+        });
+
+
+    }
+    // If multi-query
+    if (req.body["result_array[]"]) {
+        console.log(req.body["result_array[]"]);
+        // Call python script with sys.argv[1] being "M" for multi-query
+        // sys.argv[2] here is the user input array.
+        // full_archive.py then calls the multi_query function with user input array.
+        // UNTESTED
+        const tweet_out = spawn('python', ['full_archive.py', 'M', req.body["tweet"]]);
+        tweet_out.stdout.on("data", function (data) {
+            dataFormat = data.toString();
+            res.send(`stdout: ${dataFormat}`);
+            console.log(`stdout: ${dataFormat}`);
+        });
+
+        tweet_out.stderr.on('data', (data) => {
+            console.error(`stderr: ${data}`);
+        });
+
+        tweet_out.on('close', (code) => {
+            console.log(`child process exited with code ${code}`);
+        });
+    }
 });
 
 // Start server
 app.listen(port, () => {
-    //console.log('Server running on port http://127.0.0.1:' + port);
-    console.log( "Server running at:\u001b[1;36m http://127.0.0.1:"+ port + "\u001b[0m" );
+    console.log("Server running at:\u001b[1;36m http://127.0.0.1:" + port + "\u001b[0m");
 });
