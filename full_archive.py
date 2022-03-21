@@ -86,7 +86,7 @@ def nltk_filter(str):
 def strip_symbols(str):
     # The below manual approach also works, and is a bit more customizable.
     # for char in '-.,"[{()}];=+`~_<>\|#@!:?':
-    #str=str.replace("'",'')
+    # str=str.replace("'",'')
 
     # New line (\n) are being reduced to (n), therefore we remove any \n before removing symbols/punctuation.
     str = str.replace("\\n", "")
