@@ -102,6 +102,8 @@ app.post('/result', function (req, res) {
     }
 });
 
+// Start server
 app.listen(port, () => {
-    console.log('Server running on port http://127.0.0.1:' + port);
+    //console.log('Server running on port http://127.0.0.1:' + port);
+    console.log( "Server running at:\u001b[1;36m http://127.0.0.1:"+ port + "\u001b[0m" );
 });
