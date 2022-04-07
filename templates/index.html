@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Smidgen</title>
+  <title>SMIDGen</title>
 
   <!--Firebase Scripts-->
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-app.js"></script>
@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <!-- CSS Imports + Fonts -->
-  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
 
   <!-- Temp Favicon Error Fix-->
@@ -110,9 +110,9 @@
   </form> -->
 
   <h3>Multi Query</h3>
-  <form class="tweet_in" id="tweet_in" action="" method="post">
+  <form class="tweet_in" id="tweet_in" action="/results" method="post">
     <div id="multi_query" class="multi_query">
-    <input type="text" id="multi_tweet" name="result_array[]" value="" /><br>
+    <input type="text" id="multi_tweet" name="query_array[]" value="" /><br>
     </div>
     <button type="button" class="add_tweet_query_button" id="add_tweet_query_button" name="add_tweet_query" onclick="extra_query()">+</button>
     <button type="submit">Submit</button>
@@ -120,9 +120,9 @@
 
 
   <h3>Single Query</h3>
-  <form class="tweet_in" action="" method="post">
+  <form class="tweet_in" action="/results" method="post">
     <label for="tweet">Tweet:</label>
-    <input type="text" id="tweet" name="tweet" value="{{orig_tweet}}" placeholder="tweet">
+    <input type="text" id="tweet" name="tweet" value="bacon" placeholder="tweet">
     <button type="submit">Submit</button>
   </form>
   </div>
@@ -160,18 +160,18 @@
   <!-- Twitter Embed -->
   <script src="https://platform.twitter.com/widgets.js"></script>
 
-  <!-- Flask local scripts syntax -->
+  <!-- Flask local scripts syntax
   <script src="{{url_for('static', filename='load.js')}}"></script>
   <script src="{{url_for('static', filename='app.js')}}"></script>
   <script src="{{url_for('static', filename='embed.js')}}"></script>
   <script src="{{url_for('static', filename='auth.js')}}"></script>
+  -->
 
-  <!-- Local Scripts
-<script src="/static/load.js"></script>
-<script src="/static/app.js"></script>
-<script src="/static/embed.js"></script>
-<script src="/static/auth.js"></script>
--->
+  <!-- Local Scripts || Formatted for node.js -->
+  <script src="/load.js"></script>
+  <script src="/app.js"></script>
+  <script src="/embed.js"></script>
+  <script src="/auth.js"></script>
 
 </body>
 

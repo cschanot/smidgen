@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "express": "^4.17.3",
+    "firebase": "^9.6.9",
+    "json2html": "^0.0.8",
+    "nltk": "^0.0.1",
+    "python-shell": "^3.0.1",
+    "requests": "^0.3.0",
+    "require": "^2.4.20"
+  },
+  "name": "smidgen",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sensify-Lab/SMIDGen.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sensify-Lab/SMIDGen/issues"
+  },
+  "homepage": "https://github.com/Sensify-Lab/SMIDGen#readme",
+  "description": ""
+}

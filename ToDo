@@ -1,0 +1,7 @@
+//Bugs: Multi-Query will throw this error when requesting 5+ (not consistently) different queries.
+
+/*
+ node:_http_outgoing:576
+ throw new ERR_HTTP_HEADERS_SENT('set');
+ Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+*/
