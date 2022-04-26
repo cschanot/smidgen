@@ -107,6 +107,8 @@ def twapi():
 
     # Initialize multi-query twitter response array.
     api_response = []
+    no_results = []
+    hit_terms = []
 
     # Variables
     count = 1
@@ -125,70 +127,89 @@ def twapi():
                     'tweet.fields': 'public_metrics,created_at,lang,source',
                     'expansions': 'author_id',
                     'user.fields': 'name,username,location'}
+            print("api response: ")
 
-            # Call the twitter API with the given paramaters. Append the response to an array.
-            api_response.append(connect_to_endpoint(search_url, query_params))
-            # Required - Full-archive has a 1 request / 1 second limit
+            # Call the twitter API with the given paramaters. Save the result temporarily.
+            rescheck = connect_to_endpoint(search_url, query_params)
+            #print(rescheck)
+
+            # If the response produced results, append them to an array, otherwise ignore it.
+            if(rescheck['meta']['result_count'] != 0):
+                api_response.append(rescheck)
+                hit_terms.append(tweet_array[tz])
+            else:
+                print("No result for", tweet_array[tz])
+                no_results.append(tweet_array[tz])
+                print(no_results)
             time.sleep(1.5)
+
+            #if(api_response['meta']['result_count'] != 0):
+            #    api_response.append(connect_to_endpoint(search_url, query_params))
+            #else:
+            #    api_response.append("No results for ",tweet_array[tz])
+            # Required - Full-archive has a 1 request / 1 second limit
+            #time.sleep(1.5)
 
     if len(api_response) > 0:
         for x in range(len(api_response)): 
-            if(api_response[x]['meta']['result_count'] != 0):
-                # Saving Tweet ID's + Tweet text.
-                for i in api_response[x]['data']:
-                    tweet_ids['ID'].append(i['id'])
-                    tweet_text['Text'].append(i['text'])
-                            # Saving name and username.
-                for j in api_response[x]['includes']['users']:
-                    tweet_name['Name'].append(j['name'])
-                    tweet_username['Username'].append(j['username'])
+            # Saving Tweet ID's + Tweet text.
+            for i in api_response[x]['data']:
+                tweet_ids['ID'].append(i['id'])
+                tweet_text['Text'].append(i['text'])
+                        # Saving name and username.
+            for j in api_response[x]['includes']['users']:
+                tweet_name['Name'].append(j['name'])
+                tweet_username['Username'].append(j['username'])
 
-                # Convert tweet text from JSON to String format.
-                # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
-                tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
-                # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
-                tweet_text_string = tweet_text_string[8:]
-                # Strip tweet text of symbols.
-                tweet_text_string = strip_symbols(tweet_text_string)
-                # Strip stop words.
-                tweet_text_string = nltk_filter(tweet_text_string)
+            # Convert tweet text from JSON to String format.
+            # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
+            tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
+            # Strip first 8 characters, they will always be '{"Text":' which is just the original JSON label
+            tweet_text_string = tweet_text_string[8:]
+            # Strip tweet text of symbols.
+            tweet_text_string = strip_symbols(tweet_text_string)
+            # Strip stop words.
+            tweet_text_string = nltk_filter(tweet_text_string)
 
-                # Save top 15 words.
-                word_count = Counter(tweet_text_string).most_common(15)
+            # Save top 15 words.
+            word_count = Counter(tweet_text_string).most_common(15)
 
-                # Tweet IDs gathered.
-                print("\n------- Tweet IDs -------")
-                for i in tweet_ids['ID']:
-                    print("Tweet ID (%s):" %count,i)
-                    count += 1
-                count = 1
-                # Individual tweets gathered.
-                print("\n------- Tweet Text -------")
-                for i in tweet_text['Text']:
-                    print("Tweet text (%s):" %count,i)
-                    count += 1
-                count = 1
-                # Display name of twitter user.
-                print("\n------- Tweet Name -------")
-                for i in tweet_name['Name']:
-                    print("Twitter Name (%s):" %count,i)
-                    count += 1
-                count = 1
-                # @Handle of twitter user.
-                print("\n------- Tweet Username -------")
-                for i in tweet_username['Username']:
-                    print("Twitter Username (%d):" %count,"@%s"%i)
-                    count += 1
+            # Tweet IDs gathered.
+            print("\n------- Tweet IDs -------")
+            for i in tweet_ids['ID']:
+                print("Tweet ID (%s):" %count,i)
+                count += 1
+            count = 1
+            # Individual tweets gathered.
+            print("\n------- Tweet Text -------")
+            for i in tweet_text['Text']:
+                print("Tweet text (%s):" %count,i)
+                count += 1
+            count = 1
+            # Display name of twitter user.
+            print("\n------- Tweet Name -------")
+            for i in tweet_name['Name']:
+                print("Twitter Name (%s):" %count,i)
+                count += 1
+            count = 1
+            # @Handle of twitter user.
+            print("\n------- Tweet Username -------")
+            for i in tweet_username['Username']:
+                print("Twitter Username (%d):" %count,"@%s"%i)
+                count += 1
 
-                # Top word output of combined arrays.
-                print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), ' '.join(tweet_array)),*word_count, sep="\n")
+            # Top word output of combined arrays.
+            print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), ' '.join(hit_terms)),*word_count, sep="\n")
+            if(len(no_results) > 0):
+                for y in range(len(no_results)):
+                    print("No results for the following: ", no_results[y])
+            # Return all appened responses.
+            return json.dumps(api_response)
 
-                # Retrun data from API call.
-                return json.dumps(api_response)
-            else:
-                #print("No results for %s" %query_params['query'].split()[0])
-                print("No results for any query")
-                return json.dumps("No results for any query")
+    # If no results are returned for any query, simply state so.
+    else:
+        return json.dumps("No results for", ' '.join(no_results))
+
 
 
 if __name__ == "__main__":
