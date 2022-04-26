@@ -138,8 +138,10 @@ def twapi():
                 api_response.append(rescheck)
                 hit_terms.append(tweet_array[tz])
             else:
-                print("No result for", tweet_array[tz])
                 no_results.append(tweet_array[tz])
+                print("No result for", tweet_array[tz])
+
+            # Required - Full-archive has a 1 request / 1 second limit
             time.sleep(1.5)
 
             #if(api_response['meta']['result_count'] != 0):
@@ -150,7 +152,7 @@ def twapi():
             #time.sleep(1.5)
 
     if len(api_response) > 0:
-        for x in range(len(api_response)): 
+        for x in range(len(api_response)):
             # Saving Tweet ID's + Tweet text.
             for i in api_response[x]['data']:
                 tweet_ids['ID'].append(i['id'])
@@ -173,41 +175,44 @@ def twapi():
             # Save top 15 words.
             word_count = Counter(tweet_text_string).most_common(15)
 
-            # Tweet IDs gathered.
-            print("\n------- Tweet IDs -------")
-            for i in tweet_ids['ID']:
-                print("Tweet ID (%s):" %count,i)
-                count += 1
-            count = 1
-            # Individual tweets gathered.
-            print("\n------- Tweet Text -------")
-            for i in tweet_text['Text']:
-                print("Tweet text (%s):" %count,i)
-                count += 1
-            count = 1
-            # Display name of twitter user.
-            print("\n------- Tweet Name -------")
-            for i in tweet_name['Name']:
-                print("Twitter Name (%s):" %count,i)
-                count += 1
-            count = 1
-            # @Handle of twitter user.
-            print("\n------- Tweet Username -------")
-            for i in tweet_username['Username']:
-                print("Twitter Username (%d):" %count,"@%s"%i)
-                count += 1
+        # Tweet IDs gathered.
+        print("\n------- Tweet IDs -------")
+        for i in tweet_ids['ID']:
+            print("Tweet ID (%s):" %count,i)
+            count += 1
+        count = 1
+        # Individual tweets gathered.
+        print("\n------- Tweet Text -------")
+        for i in tweet_text['Text']:
+            print("Tweet text (%s):" %count,i)
+            count += 1
+        count = 1
+        # Display name of twitter user.
+        print("\n------- Tweet Name -------")
+        for i in tweet_name['Name']:
+            print("Twitter Name (%s):" %count,i)
+            count += 1
+        count = 1
+        # @Handle of twitter user.
+        print("\n------- Tweet Username -------")
+        for i in tweet_username['Username']:
+            print("Twitter Username (%d):" %count,"@%s"%i)
+            count += 1
 
-            # Top word output of combined arrays.
-            print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), ' '.join(hit_terms)),*word_count, sep="\n")
-            if(len(no_results) > 0):
-                for y in range(len(no_results)):
-                    print("No results for the following: ", no_results[y])
+        # Top word output of combined arrays.
+        print("\n------- Word Count (Top %s) for %s -------" %(len(word_count), ' '.join(hit_terms)),*word_count, sep="\n")
+        
+        # Print the search terms that did not recieve any results from the API
+        if(len(no_results) > 0):
+            for y in range(len(no_results)):
+                print("No results for the following: ", no_results[y])
+
         # Return all appened responses.
         return json.dumps(api_response)
-
     # If no results are returned for any query, simply state so.
     else:
         return json.dumps("No results for", ' '.join(no_results))
+
 
 
 
