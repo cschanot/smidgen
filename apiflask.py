@@ -140,7 +140,6 @@ def twapi():
             else:
                 print("No result for", tweet_array[tz])
                 no_results.append(tweet_array[tz])
-                print(no_results)
             time.sleep(1.5)
 
             #if(api_response['meta']['result_count'] != 0):
@@ -203,8 +202,8 @@ def twapi():
             if(len(no_results) > 0):
                 for y in range(len(no_results)):
                     print("No results for the following: ", no_results[y])
-            # Return all appened responses.
-            return json.dumps(api_response)
+        # Return all appened responses.
+        return json.dumps(api_response)
 
     # If no results are returned for any query, simply state so.
     else:
