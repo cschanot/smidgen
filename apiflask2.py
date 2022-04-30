@@ -120,6 +120,7 @@ def twapi():
     all_tweet_data = []
     tweet_ids = {"ID":[]}
     tweet_text = {"Text":[]}
+    tweet_data = {"ID":[],"Text":[]} 
     tweet_name = {"Name":[]}
     tweet_username = {"Username":[]}
 
@@ -160,12 +161,14 @@ def twapi():
             # Saving Tweet ID's + Tweet text.
             for i in api_response[x]['data']:
                 tweet_ids['ID'].append(i['id'])
+                tweet_data['ID'].append(i['id'])
                 tweet_text['Text'].append(i['text'])
+                tweet_data['Text'].append(i['text'])
                         # Saving name and username.
             for j in api_response[x]['includes']['users']:
                 tweet_name['Name'].append(j['name'])
                 tweet_username['Username'].append(j['username'])
-
+            print(tweet_data)
             # Convert tweet text from JSON to String format.
             # ensure_ascii=False leaves unicode as is - otherwise there is escaped unicode in the output, for example "u2019" for the symbol: ’
             tweet_text_string = json.dumps(tweet_text,ensure_ascii=False)
@@ -212,7 +215,7 @@ def twapi():
                 print("No results for the following: ", no_results[y])
 
         # Return all appened responses.
-        return json.dumps(api_response)
+        return json.dumps(tweet_data)
     # If no results are returned for any query, simply state so.
     else:
         return json.dumps("No results for", ' '.join(no_results))
