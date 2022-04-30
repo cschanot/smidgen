@@ -31,10 +31,7 @@
                                                 cache: false,
                                                 success: function(result) {
                                                         $('#result').show();
-                                                        $("#result").html(result.replace(/["]+/g, ''));
-                                                        $('a.tweet').click(function(){
-                                                        $('#tweet').val($(this).html());
-                                                        });
+                                                        $("#result").html(result);
                                                 },
                                                 error: function(jqXHR, textStatus, errorThrown) {
                                                         $('#result').show();
