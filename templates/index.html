@@ -7,12 +7,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SMIDGen</title>
 
-  <!--Firebase Scripts-->
+  <!--Firebase Scripts
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-functions.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase-functions.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-3.1.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script type="text/javascript">
+   function checkTweet() {
+                                $('#results').hide();
 
+                                if ($('#tweet').val() == null || $('#tweet').val() == "") {
+                                        $('#result').show();
+                                        $("#result").html("tweet is required field.").css("color", "red");
+                                } else {
+                                        $.ajax({
+                                                type: "POST",
+                                                url: "https://db-testing.sechouse.tech/twapi",
+                                                data: $('#tweet_single').serialize(),
+                                                dataType: "html",
+                                                cache: false,
+                                                success: function(result) {
+                                                        $('#result').show();
+                                                        $("#result").html(result.replace(/["]+/g, ''));
+                                                        $('a.tweet').click(function(){
+                                                        $('#tweet').val($(this).html());
+                                                        });
+                                                },
+                                                error: function(jqXHR, textStatus, errorThrown) {
+                                                        $('#result').show();
+                                                        $("#result").html(textStatus + " " + errorThrown);
+                                                }
+                                        });
+                                }
+                 }
+  </script>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
     integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
@@ -110,7 +141,7 @@
   </form> -->
 
   <h3>Multi Query</h3>
-  <form class="tweet_in" id="tweet_in" action="/serverres" method="post">
+  <form class="tweet_in" id="tweet_in" action="" method="post">
     <div id="multi_query" class="multi_query">
     <input type="text" id="multi_tweet" name="query_array[]" value="" /><br>
     </div>
@@ -121,15 +152,15 @@
 
   <h3>Single Query</h3>
   <!--<form class="tweet_in" action="/serverres" method="post">-->
-  <form class="tweet_in" action="/serverres" method="post">
+  <form class="tweet_single" id="tweet_single" action="" method="post">
     <label for="tweet">Tweet:</label>
     <input type="text" id="tweet" name="tweet" value="cat" placeholder="tweet">
-    <button type="submit">Submit</button>
+    <input class="button2" type="button" value="CHECK" onclick='checkTweet()'>
   </form>
   </div>
 
   <h3>Result Test</h3>
-  <div id="results"></div>
+  <div id="result"></div>
 
   <!-- Firebase Configuration -->
   <script>
@@ -150,7 +181,7 @@
     // const analytics = getAnalytics(app);
   </script>
 
-  <!-- JQuery + Boostrap + Popper -->
+  <!-- JQuery + Boostrap + Popper 
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
   </script>
@@ -159,25 +190,21 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"
     integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous">
-  </script>
+  </script> -->
 
   <!-- Twitter Embed -->
-  <script src="https://platform.twitter.com/widgets.js"></script>
+<!--  <script src="https://platform.twitter.com/widgets.js"></script> -->
 
-  <!-- Flask local scripts syntax
   <script src="{{url_for('static', filename='load.js')}}"></script>
   <script src="{{url_for('static', filename='app.js')}}"></script>
-  <script src="{{url_for('static', filename='embed.js')}}"></script>
-  <script src="{{url_for('static', filename='auth.js')}}"></script>
-  -->
 
-  <!-- Local Scripts || Formatted for node.js -->
+  <!-- Local Scripts || Formatted for node.js 
   <script src="/load.js"></script>
   <script src="/app.js"></script>
   <script src="/embed.js"></script>
   <script src="/auth.js"></script>
   <script src="/test.js"></script>
-
+  -->
 </body>
 
 </html>
