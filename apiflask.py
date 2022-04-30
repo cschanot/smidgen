@@ -213,8 +213,5 @@ def twapi():
     else:
         return json.dumps("No results for", ' '.join(no_results))
 
-
-
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=6970, debug=True)
