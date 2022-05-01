@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import requests
 import json
 import nltk
@@ -7,7 +8,7 @@ from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
 import time
-import ast
+from json2html import *
 
 nltk.download('stopwords', quiet=True)
 #nltk.download('word_tokenize', quiet=True)
@@ -71,9 +72,6 @@ def strip_symbols(str):
         str=str.replace(char,'')
     return str
 
-
-
-
 def bearer_oauth(r):
     """
     Method required by bearer token authentication.
@@ -91,16 +89,16 @@ def connect_to_endpoint(url, params):
         raise Exception(response.status_code, response.text)
     return response.json()
 
-
-
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/twapi', methods=["GET","POST"])
 def twapi():
-    data = json.loads(request.data)
+    print(request.form)
+    tweet = request.form['tweet']
+    #data = json.loads(request.data)
     #data = request.json
-    tweet_array = data['tweet'].split(",")
+    tweet_array = tweet.split(",")
 
     # ?? Needs a string ?? I was passing a string so not sure whats wrong here.
     # tweet_array = ast.literal_eval(str(query_params))
@@ -112,8 +110,7 @@ def twapi():
 
     # Variables
     count = 1
-    tweet_data = {"ID":[],"Text":[],"Name":[],"Username":[]}
-    all_tweet_data = []
+    all_tweet_data = {}
     tweet_ids = {"ID":[]}
     tweet_text = {"Text":[]}
     tweet_name = {"Name":[]}
@@ -127,7 +124,6 @@ def twapi():
                     'tweet.fields': 'public_metrics,created_at,lang,source',
                     'expansions': 'author_id',
                     'user.fields': 'name,username,location'}
-            print("api response: ")
 
             # Call the twitter API with the given paramaters. Save the result temporarily.
             rescheck = connect_to_endpoint(search_url, query_params)
@@ -141,15 +137,8 @@ def twapi():
                 no_results.append(tweet_array[tz])
                 print("No result for", tweet_array[tz])
 
-            # Required - Full-archive has a 1 request / 1 second limit
+            # Required - Full-archive queries have a 1 request / 1 second limit
             time.sleep(1.5)
-
-            #if(api_response['meta']['result_count'] != 0):
-            #    api_response.append(connect_to_endpoint(search_url, query_params))
-            #else:
-            #    api_response.append("No results for ",tweet_array[tz])
-            # Required - Full-archive has a 1 request / 1 second limit
-            #time.sleep(1.5)
 
     if len(api_response) > 0:
         for x in range(len(api_response)):
@@ -157,7 +146,11 @@ def twapi():
             for i in api_response[x]['data']:
                 tweet_ids['ID'].append(i['id'])
                 tweet_text['Text'].append(i['text'])
-                        # Saving name and username.
+
+                # Add each entry as a key value pair (TweetID:TweetText)
+                all_tweet_data.update({i['id']:i['text']})
+
+            # Saving name and username.
             for j in api_response[x]['includes']['users']:
                 tweet_name['Name'].append(j['name'])
                 tweet_username['Username'].append(j['username'])
@@ -207,11 +200,17 @@ def twapi():
             for y in range(len(no_results)):
                 print("No results for the following: ", no_results[y])
 
-        # Return all appened responses.
-        return json.dumps(api_response)
+        # Return all key:value responses (Tweet_ID:Tweet_Text).
+        results = json2html.convert(json = all_tweet_data)
+        return json.dumps(results)
     # If no results are returned for any query, simply state so.
     else:
         return json.dumps("No results for", ' '.join(no_results))
 
+# Modified flask output.
+cli = sys.modules['flask.cli']
+cli.show_server_banner = lambda *x: None
+print(" ** API running. **")
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=6970, debug=True)
+    app.run(host="0.0.0.0", port=6970, debug=False)

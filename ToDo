@@ -5,3 +5,7 @@
  throw new ERR_HTTP_HEADERS_SENT('set');
  Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 */
+
+// Separate functions for certain actions.
+// Progress bar - as the rate limit makes multi querys take a sizeable amount of time
+// -- https://stackoverflow.com/questions/20095002/how-to-show-progress-bar-while-loading-using-ajax

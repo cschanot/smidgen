@@ -134,7 +134,7 @@ firebase.auth().onAuthStateChanged(firebaseUser => {
         logoutNav.style.display = 'block';
     } else {
         // Debugging
-        console.log(window.location.pathname);
+        //console.log(window.location.pathname);
 
         // If the user is not logged in, redirect to the login page.
         /*
