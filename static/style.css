@@ -136,7 +136,7 @@ body {
 .login-form form a:hover {
     text-decoration: underline;
 }
-
+/*
 table,
 td,
 th {
@@ -146,6 +146,12 @@ th {
 table {
     width: 100%;
     border-collapse: collapse;
+}
+*/
+
+th,td{
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 /* Danger Alert formatting */

@@ -138,7 +138,8 @@ def twapi():
                 print("No result for", tweet_array[tz])
 
             # Required - Full-archive queries have a 1 request / 1 second limit
-            time.sleep(1.5)
+            if(len(tweet_array)>1):
+                time.sleep(1.2)
 
     if len(api_response) > 0:
         for x in range(len(api_response)):
@@ -197,15 +198,20 @@ def twapi():
         
         # Print the search terms that did not recieve any results from the API
         if(len(no_results) > 0):
-            for y in range(len(no_results)):
-                print("No results for the following: ", no_results[y])
+            if(len(no_results) > 1):
+                ", ".join(no_results)
+            print("No results for: ", no_results)
+            # Make note of results that recieved no hits for the user.
+            all_tweet_data.update({'No results for: ':no_results})
 
         # Return all key:value responses (Tweet_ID:Tweet_Text).
         results = json2html.convert(json = all_tweet_data)
         return json.dumps(results)
     # If no results are returned for any query, simply state so.
     else:
-        return json.dumps("No results for", ' '.join(no_results))
+        all_tweet_data.update({'No results for: ':no_results})
+        results = json2html.convert(json = all_tweet_data)
+        return json.dumps(results)
 
 # Modified flask output.
 cli = sys.modules['flask.cli']

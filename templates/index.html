@@ -72,26 +72,29 @@
     </div>
   </nav>
 
-  <h3>Multi Query</h3>
+  <h3>Query</h3>
   <form class="tweet_in" id="tweet_in">
     <div id="multi_query" class="multi_query">
-    <input type="text" id="multi_tweet" name="query_array[]" value="" /><br>
+      <input type="text" id="tweet" name="tweet" value="cat" /><br>
     </div>
-    <button type="button" class="add_tweet_query_button" id="add_tweet_query_button" name="add_tweet_query" onclick="extra_query()">+</button>
-    <button type="submit">Submit</button>
+    <button type="button" class="add_tweet_query_button" id="add_tweet_query_button" name="add_tweet_query"
+      onclick="extra_query()">+</button>
+    <input class="query_button" type="button" value="CHECK" onclick='checkTweet()'>
   </form>
 
-
+  <!--
   <h3>Single Query</h3>
-  <!--<form class="tweet_in" action="/serverres" method="post">-->
   <form class="tweet_single" id="tweet_single">
     <label for="tweet">Tweet:</label>
     <input type="text" id="tweet" name="tweet" value="cat" placeholder="tweet">
     <input class="button2" type="button" value="CHECK" onclick='checkTweet()'>
   </form>
   </div>
+-->
 
-  <h3>Result Test</h3>
+  <br>
+
+  <h3 id="resultTitle" style="display: none;"><u>Results:</u></h3>
   <div id="result"></div>
 
   <!-- Firebase Configuration -->
