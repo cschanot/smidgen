@@ -3,8 +3,7 @@ body {
     padding-left: 30px;
 }
 
-.fixed-top
-{
+.fixed-top {
     line-height: 30px;
 }
 
@@ -24,11 +23,11 @@ body {
 }
 
 /* Login/Logout Button Padding */
-.form-inline{
+.form-inline {
     padding-right: 30px;
 }
 
-.navbar-brand{
+.navbar-brand {
     color: #068f06 !important;
 }
 
@@ -136,6 +135,7 @@ body {
 .login-form form a:hover {
     text-decoration: underline;
 }
+
 /*
 table,
 td,
@@ -149,24 +149,53 @@ table {
 }
 */
 
-th,td{
+th,
+td {
     padding-left: 7px;
     padding-right: 7px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    max-width: 800px;
+}
+
+table {
+    border-collapse: separate;
+}
+
+td {
+    border: solid 1px #000;
+    border-radius: 5px;
+}
+
+td {
+    border: solid 1.5px #1DA1F2;
+    border-radius: 15px;
+}
+
+/*
+td:first-child { border-top-left-radius: 10px; }
+td:first-child { border-bottom-left-radius: 10px; }
+
+td:last-child { border-top-right-radius: 10px; }
+td:last-child { border-bottom-right-radius: 10px; }
+*/
+table {
+    border-radius: 5px;
 }
 
 /* Danger Alert formatting */
-.alert-danger
-{
+.alert-danger {
     /* Keep alert on top 
     z-index: 10;*/
     position: absolute;
 }
 
-.navbar-brand
-{
+.navbar-brand {
     padding-left: 30px;
 }
 
 @media screen and (max-width: 768px) {
-    body { padding-top: 0px; }
+    body {
+        padding-top: 0px;
+    }
 }
