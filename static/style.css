@@ -151,25 +151,33 @@ table {
 
 th,
 td {
-    padding-left: 7px;
-    padding-right: 7px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
     max-width: 800px;
 }
 
 table {
     border-collapse: separate;
+    border: solid 0px;
+    border-spacing: 7px;
 }
 
-td {
+th {
     border: solid 1px #000;
     border-radius: 5px;
+    background-color:rgb(220, 220, 220);
 }
 
 td {
     border: solid 1.5px #1DA1F2;
     border-radius: 15px;
+    background-color:rgb(220, 220, 220);
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+h3#resultTitle{
+    padding-left: 7px;
 }
 
 /*
