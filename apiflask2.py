@@ -8,6 +8,8 @@ from collections import Counter
 import string
 import time
 import ast
+from flask_cors import CORS
+from json2html import *
 
 nltk.download('stopwords', quiet=True)
 #nltk.download('word_tokenize', quiet=True)
@@ -94,6 +96,7 @@ def connect_to_endpoint(url, params):
 
 
 app = Flask(__name__)
+CORS(app)
 @app.route('/', methods=["GET","POST"])
 def index():
     return render_template('index.html')
@@ -116,8 +119,7 @@ def twapi():
 
     # Variables
     count = 1
-    tweet_data = {"ID":[],"Text":[],"Name":[],"Username":[]}
-    all_tweet_data = []
+    all_tweet_data = {}
     tweet_ids = {"ID":[]}
     tweet_text = {"Text":[]}
     tweet_data = {"ID":[],"Text":[]} 
@@ -159,11 +161,15 @@ def twapi():
     if len(api_response) > 0:
         for x in range(len(api_response)):
             # Saving Tweet ID's + Tweet text.
+            z = 0
             for i in api_response[x]['data']:
                 tweet_ids['ID'].append(i['id'])
-                tweet_data['ID'].append(i['id'])
+                tweet_data['ID'] = i['id']
+                print(i['id'])
                 tweet_text['Text'].append(i['text'])
-                tweet_data['Text'].append(i['text'])
+                tweet_data['Text'] = i['text']
+                print(tweet_data)
+                all_tweet_data.update({i['id']:i['text']})
                         # Saving name and username.
             for j in api_response[x]['includes']['users']:
                 tweet_name['Name'].append(j['name'])
@@ -215,7 +221,8 @@ def twapi():
                 print("No results for the following: ", no_results[y])
 
         # Return all appened responses.
-        return json.dumps(tweet_data)
+        someshit = json2html.convert(json = all_tweet_data)
+        return json.dumps(someshit)
     # If no results are returned for any query, simply state so.
     else:
         return json.dumps("No results for", ' '.join(no_results))
