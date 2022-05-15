@@ -1,6 +1,7 @@
 body {
     padding-top: 80px;
     padding-left: 30px;
+    padding-right: 30px;
 }
 
 .fixed-top {
@@ -196,6 +197,31 @@ table {
     /* Keep alert on top 
     z-index: 10;*/
     position: absolute;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    /*border: 2px solid rgb(0, 225, 255);*/
+}  
+
+.flex-child:first-child {
+    margin-right: 20px;
+} 
+
+#result, #saved_data{
+    height: 550px;
+    overflow-y: auto;
+}
+
+#sticky{
+    position: sticky;
+    top: 0;
+    text-align: center;
+    
 }
 
 .navbar-brand {

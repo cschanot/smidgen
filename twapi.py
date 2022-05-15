@@ -26,7 +26,7 @@ search_url = "https://api.twitter.com/2/tweets/search/all"
 # https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
 
 # See here for example queries: https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query
-# Full archine search: https://developer.twitter.com/en/docs/twitter-api/tweets/search/quick-start/full-archive-search
+# Full archive search: https://developer.twitter.com/en/docs/twitter-api/tweets/search/quick-start/full-archive-search
 
 # Example query parameters, note: expansions with author_id is REQUIRED to use user.fields.
 # query_params = {'query': 'test place_country:US -birthday -is:retweet',

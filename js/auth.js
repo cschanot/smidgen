@@ -37,7 +37,7 @@ if (loginForm) {
                 document.forms[0].reset();
 
                 // Redirect to home.
-                window.location = '/';
+                window.location = '/projects';
             }).catch(function (error) {
                 var errorCode = error.code;
                 var errorMessage = error.message;
@@ -81,7 +81,7 @@ if (signupForm) {
                             console.log("Document written with ID: ", userCredential.user.uid);
                             document.forms[0].reset();
                             //signupForm.reset();
-                            window.location = '/';
+                            window.location = '/search';
                         })
                         .catch((error) => {
                             console.error("Error adding document: ", error);
@@ -109,7 +109,7 @@ if (logoutNav) {
         document.getElementById('logout-nav').style.display = 'none';
 
         // Reidrect to login page.
-        window.location = 'auth';
+        window.location = '/auth';
         //console.log("LOGOUT BUTTON CLICKED");
     })
 }
@@ -130,7 +130,6 @@ function showLoginForm() {
 firebase.auth().onAuthStateChanged(firebaseUser => {
     if (firebaseUser) {
         // Grab documents to hide/show.
-        document.getElementById('main').style.display = 'block';
         logoutNav.style.display = 'block';
     } else {
         // Debugging
