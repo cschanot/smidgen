@@ -14,9 +14,9 @@ $(window).on("scroll", function () {
     }
 })
 
+// Dynamically add extra query spaces for a multi-query.
 var dynaplus = document.getElementById("add_tweet_query_button");
 if (dynaplus) {
-    // Dynamically add extra query spaces for a multi-query.
     document.getElementById("add_tweet_query_button").onclick = function () {
         var label = document.createElement("div");
         var input = document.createElement("input");
@@ -33,6 +33,7 @@ if (dynaplus) {
 
 // Function that chains the following: Flask API ----> Twitter API ----> Return Tweet Data
 function checkTweet() {
+    // Nonsense security for testing.
     var user = firebase.auth().currentUser;
     if (user) {
         console.log("User", user.uid, "signed in");
@@ -61,16 +62,14 @@ function checkTweet() {
 
     // Serialize data for AJAX
     serializedData += input;
-    console.log(serializedData);
 
-    console.log("searializedData", serializedData);
+    //console.log("searializedData", serializedData);
     // Hide the results DIV to start and set default color.
     $("#result").css("color", "black");
     resultDiv.style.visibility = "hidden";
     saveButton.style.visibility = "hidden";
 
     // If the query is empty, prompt the user. Otherwise continue.
-    //if (inputFormatted == null || inputFormatted == "") {
     if ($('#tweet').val() == null || $('#tweet').val() == "") {
         resultDiv.style.visibility = "visible";
         $("#result").html("Required Field.").css("color", "red");
@@ -79,6 +78,7 @@ function checkTweet() {
             type: "POST",
             // UDEL url:
             url: "http://smidgen.cis.udel.edu:6970/twapi",
+            //url: "http://192.168.1.81:6970/twapi",
             //data: inputFormatted,
             //data: $('#tweet').serialize(),
             data: serializedData,
@@ -87,11 +87,12 @@ function checkTweet() {
             success: function (result) {
                 // Remove outside quotes.
                 result = result.replace(/(^"|"$)/g, '')
-                //console.log("result from ajax: ", result);
 
                 //$('#resultTitle').show();
+                // Show and add the data recieved to the results div.
                 resultDiv.style.visibility = "visible";
                 $("#result").html(result);
+                // Show save button and sticky the header so table labels still show as the user scrolls.
                 saveButton.style.visibility = "visible";
                 stickyHeader();
             },
@@ -111,12 +112,8 @@ function removeAllChildNodes(parent) {
 }
 
 // Save Query Results
-/*
-    db.collection("projects").doc(projID).collection("tweets").doc(key).set({
-        KEY: VALUE,
-    })
-*/
 function saveQueryData() {
+    // Nonsense security for testing.
     var user = firebase.auth().currentUser;
     if (user) {
         console.log("User", user.uid, "signed in");
@@ -129,13 +126,14 @@ function saveQueryData() {
     // Used to grab data from URL (Project ID)
     let params = new URLSearchParams(location.search);
     projID = params.get('projectid');
+    params.delete('projectid');
 
     // Grab ProjID from URL, if there is no ProjID notify the user and exit the save function.
     if (projID == null) {
         $("#error_test").html("Error: No project selected.").css("color", "red");
         return;
     }
-    console.log("projID: ", projID);
+    //console.log("projID: ", projID);
 
     // Grab all tables -- table[0] is query results, table[1] is saved data loaded from DB
     dataTable = document.getElementsByTagName('table');
@@ -164,27 +162,28 @@ function saveQueryData() {
     for (let i = 0; i < dataTable.length; i++) {
         dataTable[i].setAttribute("id", "tweet_data");
     }
+    //console.log("JSON mp:",JSON.stringify(Array.from(mp.entries())));
 
-    // Iterate through each key (tweet ID) and value (tweet text) pair and save to the database
-    mp.forEach(function (value, key) {
-        // Key value test
-        console.log(key + " = " + value);
-
-        db.collection("projects").doc(projID).collection("tweets").doc(key).set({
-                text: value,
-                id: key
-            })
-            .then(() => {
-                console.log("Tweet saved.");
-            })
-            .catch((error) => {
-                console.error("Error saving tweet: ", error);
-            });
-    })
+    $.ajax({
+		type: "POST",
+		url: "http://127.0.0.1:8081/savequerydata",
+        data: {projID: projID, mp: JSON.stringify(Array.from(mp.entries()))}
+		//contentType: "application/json"
+	}).done(function(reply){
+		//Ajax reply
+        if(reply.length != 0)
+        {
+            console.log(reply);
+        }
+        else{
+            console.log("Tweets saved successfully.")
+        }
+	})
 }
 
 // Load exisiting tweet data the user has saved to the database.
 function loadData() {
+    // Nonsense security for testing.
     var user = firebase.auth().currentUser;
     if (user) {
         console.log("User", user.uid, "signed in");
@@ -193,18 +192,40 @@ function loadData() {
         $("#error_test").html("Error: Must be logged in.").css("color", "red");
         return;
     }
-    // Clear previous data.
-    var loadData = document.getElementById('saved_data')
-    removeAllChildNodes(loadData);
-    loadData.style.visibility = "visible";
 
     // Grab ProjID from URL, if there is no ProjID notify the user and exit the load function.
+    // Used to grab data from URL (Project ID)
     let params = new URLSearchParams(location.search);
     projID = params.get('projectid');
+    params.delete('projectid');
+
+    // Grab ProjID from URL, if there is no ProjID notify the user and exit the save function.
     if (projID == null) {
         $("#error_test").html("Error: No project selected.").css("color", "red");
         return;
     }
+    console.log("projID: ", projID);
+
+    // Ajax call to load saved tweets.
+    $.ajax({
+		type: "POST",
+		url: "http://127.0.0.1:8081/loadtweetdata",
+        data: {key: projID},
+	}).done(function(data){
+        //console.log("loadData ajax call complete: data -->", data);
+        //console.log("loadedTweets IN: ",loadedTweets);
+
+        // Function to handle frontend displaying of the data.
+        loadDataTable(data);
+	})
+};
+
+function loadDataTable(tweetData)
+{
+    // Clear previous data.
+    var loadData = document.getElementById('saved_data')
+    removeAllChildNodes(loadData);
+    loadData.style.visibility = "visible";
 
     // ---- Table Layout ----
     // tr:Table Row, th:Table Header, td:Table Data
@@ -214,6 +235,7 @@ function loadData() {
     //     <td>TweetText</td>
     //   </tr>
     // </table>
+    //console.log("Callback TD: ",tweetData);
 
     // Create table to append data to.
     var table = document.createElement("table");
@@ -237,26 +259,24 @@ function loadData() {
     //Append above to a the table.
     table.appendChild(tr);
 
-    // Grab saved data based on currenlty selected project (projID), dynammically create a table for the data.
-    db.collection("projects").doc(projID).collection("tweets").get().then(function (result) {
-        result.forEach(doc => {
-            // Create table elements.
-            var tr = document.createElement("tr");
-            var th = document.createElement("th");
-            var td = document.createElement("td");
-            // Append table row.
-            table.appendChild(tr);
-            // Set data and append to the appended row.
-            th.textContent = doc.data().id;
-            tr.appendChild(th);
-            td.textContent = doc.data().text
-            tr.appendChild(td);
-            // Repeat until all tweets are loaded.
-        })
-    })
+    for (const [key, value] of Object.entries(tweetData)) {
+        //console.log(`${key}: ${value}`);
+        var tr = document.createElement("tr");
+        var th = document.createElement("th");
+        var td = document.createElement("td");
+        // Append table row.
+        table.appendChild(tr);
+        // Set data and append to the appended row.
+        th.textContent = key;
+        tr.appendChild(th);
+        td.textContent = value;
+        tr.appendChild(td);
+        // Repeat until all tweets are loaded.
+    }
+
     // Append the final results to the data div.
     loadData.appendChild(table);
-};
+}
 
 function stickyHeader(){
     //var tbody = document.getElementsByTagName("tbody");
